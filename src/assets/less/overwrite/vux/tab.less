@@ -1,0 +1,34 @@
+/*tab*/
+@prefixClass: vux-tab;
+@easing-in-out: cubic-bezier(0.35, 0, 0.25, 1);
+@effect-duration: .3s;
+
+.ibox-ui {
+	.@{prefixClass} {
+	  &-ink-bar {
+	    height: 2/@unit;
+	  }
+	}
+
+	.vux-tab {
+	  background-color: @bgColor-white;
+	  height: 44/@unit;
+	}
+
+	.vux-tab .vux-tab-item {
+	  // background: linear-gradient(180deg, @font-color-gray-light, @font-color-gray-light, rgba(229, 229, 229, 0)) bottom left no-repeat;
+	  font-size: 14/@unit;
+	  line-height: 44/@unit;
+	}
+
+	/** when=prop:custom-bar-width **/
+	.vux-tab-item-badge {
+	  height: 18/@unit;
+	  min-width: 18/@unit;
+	  padding: 0 4/@unit;
+	  border-radius: 30/@unit;
+	  margin: auto 0 auto 4/@unit;
+	  line-height: 18/@unit;
+	  font-size: 11/@unit;
+	}
+}

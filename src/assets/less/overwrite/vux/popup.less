@@ -1,0 +1,44 @@
+/*popup*/
+.ibox-ui {
+	// popup-header
+	.vux-popup-header.vux-1px-b:after {
+	  border-color: @border-color;
+	}
+
+	// popup-picker
+	.vux-cell-box:before {
+	  border-top-color: @border-color;
+	  color: @font-color-gray-light;
+	  left: 15/@unit;
+	}
+	.vux-popup-picker-header {
+	  height: 44/@unit;
+	  &:after {
+	    .setBottomLine(@font-color-gray-light);
+	  }
+	}
+	.vux-popup-picker-header-menu {
+	  padding-left: 15/@unit;
+	  line-height: 44/@unit;
+	}
+	.vux-popup-picker-header-menu-right {
+	  padding-right: 15/@unit;
+	}
+	.vux-popup-picker-select-box.weui-cell__bd:after {
+	  height: 6/@unit;
+	  width: 6/@unit;
+	  border-width: 2/@unit 2/@unit 0 0;
+	  border-color: @border-color;
+	  top: -2/@unit;
+	  right: 15/@unit;
+	  margin-top: -3/@unit;
+	}
+	.vux-popup-picker-placeholder {
+	  color: @font-color-gray-light;
+	}
+
+	// popup-radio
+	.vux-popup-radio-popup {
+	  background-color: @bgColor-white;
+	}
+}

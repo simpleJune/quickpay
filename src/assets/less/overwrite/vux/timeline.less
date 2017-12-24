@@ -1,0 +1,42 @@
+/*timeline*/
+@vux-timeline: ~"vux-timeline";
+
+.ibox-ui {
+	.vux-timeline {
+	  padding: 1/@unit;
+	}
+	.@{vux-timeline} {
+	  &-item-content {
+	    padding:0 0 15/@unit 40/@unit;
+	  }
+	  &-item-head, &-item-head-first {
+	    border-radius:99/@unit;
+	  }
+	  &-item-head {
+	    width:10/@unit;
+	    height:10/@unit;
+	    left:11/@unit;top:4/@unit;
+	  }
+	  &-item-head-first {
+	    width:20/@unit;
+	    height:20/@unit;
+	    left:6/@unit;top:5/@unit;
+	  }
+	  &-item-tail {
+	    width:2/@unit;
+	    left:15/@unit;
+	    top:5/@unit;
+	    // background-color: @timeline-item-bg-color;
+	  }
+	  &-item-checked {
+	    width: 20/@unit;
+	    height: 20/@unit;
+	    &.weui-icon-success-no-circle::before {
+	      font-size: @font-size-14;
+	      left: 4/@unit;
+	      top: 3/@unit;
+	      color: @bgColor-white;
+	    }
+	  }
+	}
+}

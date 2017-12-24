@@ -1,0 +1,51 @@
+/* x-header */
+.ibox-ui {
+	.vux-header {
+	  padding: 0;
+	}
+	.vux-header .vux-header-title {
+	  line-height: 44/@unit;
+	}
+	.vux-header-title-area, .vux-header .vux-header-title {
+	  margin: 0 88/@unit;
+	  height: 44/@unit;
+	}
+	.vux-header .vux-header-left,.vux-header .vux-header-right {
+	  top: 14/@unit;
+	  font-size: 14/@unit;
+	  line-height: 21/@unit;
+	}
+	.vux-header .vux-header-left a,.vux-header .vux-header-left button,.vux-header .vux-header-right a,.vux-header .vux-header-right button {
+	  margin-right: 8/@unit;
+	}
+	.vux-header .vux-header-left {
+	  left: 18/@unit
+	}
+	.vux-header .vux-header-left .vux-header-back {
+	  padding-left: 16/@unit
+	}
+	.vux-header .vux-header-left .left-arrow {
+		width: 66/@unit;
+		height: 44/@unit;
+		top: -14/@unit;
+		left: -18/@unit;
+
+		&:before {
+			width: 12/@unit;
+			height: 12/@unit;
+			border-color: @header-arrow-color;
+			border-width: 2/@unit 0 0 2/@unit;
+			top: 16/@unit;
+			left: 20/@unit;
+		}
+	}
+	.vux-header .vux-header-right {
+	  right: 10/@unit;
+	}
+	.vux-header .vux-header-right a,.vux-header .vux-header-right button {
+	  margin-left: 8/@unit;
+	}
+	.vux-header .vux-header-right .vux-header-more:after {
+	  font-size: 16/@unit;
+	}
+}

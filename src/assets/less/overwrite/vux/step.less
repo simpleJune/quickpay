@@ -1,0 +1,67 @@
+/*step*/
+.ibox-ui {
+	.vux-step-item-tail {
+	  top: 12/@unit;
+	}
+
+	.vux-step-item-tail-finish {
+	  background-color: @bgColor-yellow;
+	}
+
+	.vux-step-item-tail-process, .vux-step-item-tail-wait {
+	  background-color: @bgColor-gray;
+	}
+
+	.vux-step-item-icon {
+	  width: 22/@unit;
+	  height: 22/@unit;
+	}
+
+	.vux-step-item-checked::before {
+	  font-size: 15/@unit !important;
+	  line-height: 22/@unit;
+	  transform: translateY(-4/@unit);
+	}
+
+	.vux-step-item-title {
+	  font-size: 0.8rem;
+	}
+
+	.vux-step-item-head {
+	  margin-right: -4/@unit;
+
+	  .vux-step-item-head-inner {
+	    width: 22/@unit;
+	    height: 22/@unit;
+	    line-height: 22/@unit;
+	    border-radius: 99/@unit;
+	    font-size: 14/@unit;
+	    background-color: @bgColor-white;
+	  }
+	}
+
+	.vux-step-item-head-finish .vux-step-item-head-inner{
+	  border-color: @border-color;
+	  color: @bgColor-yellow;
+	}
+
+	.vux-step-item-head-process .vux-step-item-head-inner{
+	  border-color: @bgColor-yellow;
+	  color: @font-color-white;
+	  background-color: @bgColor-yellow;
+	}
+
+	.vux-step-item-head-wait .vux-step-item-head-inner {
+	  border-color: @border-color;
+	  color: @font-color-gray-light;
+	}
+
+	.vux-step-item-main {
+	  color: @font-color-gray-light;
+	  padding-left: 5/@unit;
+	}
+
+	.vux-step-item-main-process {
+	  color: @font-color-gray;
+	}
+}

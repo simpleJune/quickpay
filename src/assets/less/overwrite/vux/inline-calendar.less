@@ -1,0 +1,83 @@
+/*inline-calendar*/
+.ibox-ui {
+	.calendar-year > span, .calendar-month > span {
+	  padding: 8/@unit;
+	  width: 24/@unit;
+	  height: 24/@unit;
+	}
+	.vux-prev-icon, .vux-next-icon {
+	  top: 15/@unit;
+	  width: 12/@unit;
+	  height: 12/@unit;
+	  margin-left: 15/@unit;
+	  line-height: 40/@unit;
+	}
+	.vux-next-icon {
+	  top: 14/@unit;
+	  right: 15/@unit;
+	}
+	.calendar-header {
+	  line-height: 40/@unit;
+	  // font-size: 1.2em;
+	}
+	.switch-btn, .calendar-title {
+	  border-radius: 4/@unit;
+	  line-height: 30/@unit;
+	}
+	.switch-btn {
+	  width: 30/@unit;
+	  margin: 5/@unit;
+	  color: @font-color-yellow;
+	  font-family: "SimSun";
+	}
+	.calendar-title {
+	  color: @font-color-black;
+	}
+	.switch-btn:active, .calendar-title:active, .calendar-header a.active {
+	  background-color: @font-color-yellow;
+	  color: @font-color-white;
+	}
+	.calendar-week span {
+	  font-size: 1.6em;
+	  line-height: 34/@unit;
+	}
+	.inline-calendar {
+	  border-radius: 2/@unit;
+	}
+	.calendar-enter, .calendar-leave-active {
+	  transform: translate3d(0,-10/@unit, 0);
+	}
+	.calendar:before {
+	  left: 30/@unit;
+	  top: -10/@unit;
+	  border-width: 5/@unit;
+	  border-bottom-color: @border-color;
+	}
+	.calendar:after {
+	  left: 30/@unit;
+	  top: -9/@unit;
+	  border-width: 5/@unit;
+	  border-bottom-color: @font-color-white;
+	}
+	.inline-calendar table {
+	  color: @font-color-black;
+	}
+	.inline-calendar td {
+	  padding:5/@unit 0;
+	}
+	.inline-calendar td.current > span.vux-calendar-each-date {
+	  color: @font-color-white !important;
+	}
+
+	/** same as week-calendar style**/
+	.vux-calendar-top-tip {
+	  left: -10/@unit;
+	  font-size: 20/@unit;
+	}
+	.vux-calendar-dot {
+	  width: 5/@unit;
+	  height: 5/@unit;
+	  margin-left: -2.5/@unit;
+	  background-color: @bgColor-yellow;
+	}
+}

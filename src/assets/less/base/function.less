@@ -1,0 +1,99 @@
+@import "variable";
+
+// 垂直居中
+.iBox-fn__alignV(@W:100%, @H:100) {
+  width: @W/@unit;
+  height: @H/@unit;
+  position: absolute;
+  top: 50%;
+  margin-top: -(@H/2)/@unit;
+}
+
+// 线性渐变
+.iBox-fn__linear(@toN:90deg, @startColor:#e1ba34, @endColor:#e99235) {
+  background-image:linear-gradient(@toN, @startColor, @endColor);
+}
+
+// 禁止选择
+.iBox-fn__userSelect(@p:none) {
+  user-select: @p;
+}
+
+// 圆形图片
+.iBox-fn__radiusImg(@w:64) {
+  width: @w/@unit;
+  height: @w/@unit;
+  border-radius: @w/@unit;
+}
+
+// 清除浮动
+.iBox-fn__clearfix() {
+  &:after {
+    width: 0;
+    height: 0;
+    content: " ";
+    display: block;
+    overflow: hidden;
+    clear: both;
+  }
+}
+
+
+
+/*
+.iBox-fn__setTopLine(@c: @borderColor) {
+  content: " ";
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  height: 1px;
+  z-index: 2;
+  border-top: 1px solid @c;
+  color: @c;
+  transform-origin: 0 0;
+  transform: scaleY(0.5);
+}
+
+.iBox-fn__setBottomLine(@c: @borderColor) {
+  content: " ";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  height: 1px;
+  z-index: 2;
+  border-bottom: 1px solid @c;
+  color: @c;
+  transform-origin: 0 100%;
+  transform: scaleY(0.5);
+}
+
+.iBox-fn__setLeftLine(@c: @borderColor) {
+  content: " ";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 1px;
+  bottom: 0;
+  z-index: 2;
+  border-left: 1px solid @c;
+  color: @c;
+  transform-origin: 0 0;
+  transform: scaleX(0.5);
+}
+
+.iBox-fn__setRightLine(@c: @borderColor) {
+  content: " ";
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 1px;
+  bottom: 0;
+  z-index: 2;
+  border-right: 1px solid @c;
+  color: @c;
+  transform-origin: 100% 0;
+  transform: scaleX(0.5);
+}
+*/

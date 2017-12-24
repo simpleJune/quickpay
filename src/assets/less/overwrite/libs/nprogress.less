@@ -1,0 +1,24 @@
+/* ngprogress */
+#nprogress {
+	.bar {
+		height: 3/@unit;
+		background: @bgColor-yellow;
+		.peg {
+			width: 100/@unit;
+			box-shadow: 0 0 10/@unit @bgColor-yellow, 0 0 .5/@unit @bgColor-yellow;
+		}
+	}
+	.spinner {
+		top: 15/@unit;
+  	right: 15/@unit;
+
+	}
+	.spinner-icon {
+	  width: 20/@unit;
+	  height: 20/@unit;
+	  border-width: 2/@unit;
+	  border-top-color: @bgColor-yellow;
+  	border-left-color: @bgColor-yellow;
+  	border-bottom-color: @bgColor-yellow;
+	}
+}

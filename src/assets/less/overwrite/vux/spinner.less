@@ -1,0 +1,40 @@
+/*spinner*/
+.ibox-ui {
+	.vux-spinner {
+	  stroke: @font-color-gray;
+	  fill: @font-color-gray;
+	  width: 28/@unit;
+	  height: 28/@unit;
+	}
+
+	.vux-spinner svg {
+	  width: 28/@unit;
+	  height: 28/@unit;
+	}
+
+	.vux-spinner.vux-spinner-inverse {
+	  stroke: @font-color-white;
+	  fill: @font-color-white;
+	}
+
+	.vux-spinner-android {
+	  stroke: @font-color-yellow;
+	}
+
+	.vux-spinner-ios, .vux-spinner-ios-small {
+	  stroke: @font-color-gray;
+	}
+
+	.vux-spinner-spiral .stop1 {
+	  stop-color: @font-color-white;
+	  stop-opacity: 0;
+	}
+
+	.vux-spinner-spiral.vux-spinner-inverse .stop1 {
+	  stop-color: @font-color-black;
+	}
+
+	.vux-spinner-spiral.vux-spinner-inverse .stop2 {
+	  stop-color: @font-color-white;
+	}
+}

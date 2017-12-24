@@ -1,0 +1,153 @@
+@import '~assets/less/base/common';
+
+@font-color-tips: #FFA700;
+
+.plan-add__panel {
+  margin-top: 20/@unit;
+  background-color: @bgColor-white;
+}
+.plan-add__row {
+  font-size: @font-size-14;
+  margin-left: 16/@unit;
+  >h3 {
+    height: 22/@unit;
+    line-height: 22/@unit;
+    padding: 20/@unit 0;
+    font-weight: normal;
+    font-size: @font-size-16;
+  }
+  >p {
+    padding: 15/@unit 0;
+    color: @font-color-gray;
+    &.tips {
+      padding: 0;
+      margin-top: 8/@unit;
+      text-align: center;
+    }
+  }
+  &.keyboard {
+    height: 90/@unit;
+    margin-bottom: 15/@unit;
+    >h4 {
+      height: 14/@unit;
+      line-height: 1em;
+      font-weight: normal;
+    }
+  }
+  .list {
+    >li,
+    >dd {
+      list-style: none;
+      line-height: 16/@unit;
+      padding: 3/@unit 0;
+      color: @font-color-gray;
+    }
+  }
+  ul.list {
+    padding-bottom: 20/@unit;
+  }
+  dl.list {
+    padding-top: 8/@unit;
+    padding-right: 16/@unit;
+    font-size: @font-size-13;
+    >dt {
+      color: @font-color-gray;
+    }
+  }
+}
+.plan-add__input {
+  height: 56/@unit;
+  line-height: 56/@unit;
+  padding: 10/@unit 0;
+  &.vux-1px-b {
+    &:after {
+      clear: left;
+    }
+  }
+  >i,
+  >em,
+  >span {
+    display: block;
+    float: left;
+    height: inherit;
+    line-height: inherit;
+  }
+  .dollar {
+    width: 26/@unit;
+    background: url('../icon/dollar@2x.png') scroll no-repeat left center;
+    background-size: 100% auto;
+  }
+  .number {
+    width: auto;
+    font-size: 3.4*@font-size-10;
+    position: relative;
+    padding: 0 5/@unit;
+    &.twinkle {
+      &:after {
+        content: " ";
+        display: block;
+        right: 0;
+        .iBox-fn__alignV(1, 28);
+        background-color: @bgColor-yellow;
+        animation: twinkle .8s infinite;
+      }
+    }
+  }
+  .txt {
+    float: right;
+    height: 1em;
+    line-height: 1em;
+    overflow: hidden;
+    margin-top: 27/@unit;
+    margin-right: 16/@unit;
+    color: @font-color-gray;
+    font-style: normal;
+    &.warn {
+      color: @font-color-red;
+    }
+  }
+}
+.plan-add__preview {
+  padding-right: 16/@unit;
+  background-color: #FFF;
+  .amount-title {
+    padding: 20/@unit 0;
+    text-align: center;
+    .amount-text {
+      font-size: @font-size-16;
+      color: @font-color-black;
+    }
+    .amount-money {
+      color: @font-color-yellow;
+      font-size: 26/@unit;
+    }
+  }
+  .amount-list {
+    font-size: @font-size-13;
+    background-color: #FFF;
+    padding: 10/@unit 0;
+    >p {
+      line-height: 30/@unit;
+      >span {
+        &:first-child {
+          float: left;
+          color: @font-color-gray ;
+        }
+        &:last-child {
+          float: right;
+        }
+      }
+      .iBox-fn__clearfix()
+    }
+  }
+}
+.plan-add__info {
+  margin: 8/@unit 16/@unit 0;
+  >p {
+    font-size: @font-size-13;
+    color: @font-color-gray;
+  }
+}
+.plan-add__btn {
+  margin: 44/@unit 16/@unit 0;
+}

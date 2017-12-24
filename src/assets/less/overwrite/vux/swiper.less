@@ -1,0 +1,43 @@
+/*swiper*/
+@pre: vux;
+
+.ibox-ui {
+	// swiper
+	.@{pre}-slider {
+	  > .@{pre}-indicator, .@{pre}-indicator-right {
+	    right: 15/@unit;
+	    bottom: 10/@unit;
+	    > a {
+	      margin-left: 6/@unit;
+
+	      > .@{pre}-icon-dot {
+	        width: 6/@unit;
+	        height: 6/@unit;
+	        border-radius: 3/@unit;
+	        background-color: @bgColor-gray;
+	      }
+	    }
+	  }
+
+	  > .@{pre}-indicator-left {
+	    left: 15/@unit;
+	  }
+
+	  > .@{pre}-swiper {
+	    > .@{pre}-swiper-item {
+	        > .@{pre}-swiper-desc {
+	          height: 1.4em;
+	          font-size: 16/@unit;
+	          padding: 20/@unit 50/@unit 12/@unit 13/@unit;
+	          color: @font-color-white;
+	        }
+	      }
+	    }
+	  }
+
+	// swiper-out
+	.vux-swipeout-button {
+	  font-size: 14/@unit;
+	}
+
+}

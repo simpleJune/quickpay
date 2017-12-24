@@ -1,0 +1,37 @@
+// weui
+@import '~vux/src/styles/reset.less';
+@import '~vux/src/styles/1px.less';
+@import '~vux/src/styles/weui/widget/weui-animate/weui-animate';
+
+// iBox
+@import 'base/reset';
+@import 'base/common';
+@import 'overwrite/index';
+
+.page {
+  width: 100%;
+  height: auto;
+  overflow-x: hidden;
+	font-size: @font-size-15;
+}
+
+// 加载中
+.page__loading {
+  animation-duration: 0.6s;
+  animation-iteration-count: infinite;
+  animation-name: loading;
+  animation-timing-function: linear;
+  border-radius: 99em;
+  border: 0 solid #DDD;
+  border-left-color: #666;
+  display: inline-block;
+  vertical-align:middle;
+  width: 12/@unit;
+  height: 12/@unit;
+  border-width: 2/@unit;
+}
+
+// 清除浮动
+.clearfix {
+  .iBox-fn__clearfix()
+}

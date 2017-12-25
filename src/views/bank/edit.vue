@@ -95,8 +95,8 @@
     },
     computed: {
       ...mapState({
-        mchtInfo: state => state.globalStore.mchtInfo,
-        creditCardList: state => state.globalStore.creditCardList
+        mchtInfo: state => state.global.mchtInfo,
+        creditCardList: state => state.global.creditCardList
       }),
       creditCardInfo () {
         return this.creditCardList.find((value, index ,arr) => {

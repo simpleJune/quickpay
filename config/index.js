@@ -1,6 +1,6 @@
 // see http://vuejs-templates.github.io/webpack for documentation.
 var path = require('path')
-var releasePath = '../../dist'
+var releasePath = '../dist'
 
 module.exports = {
   build: {

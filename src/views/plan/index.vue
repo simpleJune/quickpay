@@ -76,7 +76,7 @@ export default {
   },
   computed: {
     ...mapState({
-      creditCardList: state => state.globalStore.creditCardList
+      creditCardList: state => state.global.creditCardList
     })
   },
   methods: {

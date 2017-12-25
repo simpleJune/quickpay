@@ -83,7 +83,7 @@ export default {
   computed: {
     ...mapState({
       bankSelectObj: state => state.bankSelect.bankSelectObj,
-      mchtInfo: state => state.globalStore.mchtInfo,
+      mchtInfo: state => state.global.mchtInfo,
     }),
     buttonFlag () {
       if (this.opStep === 1) {

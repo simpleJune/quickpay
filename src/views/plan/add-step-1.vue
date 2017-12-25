@@ -125,7 +125,7 @@ export default {
   },
   computed: {
     ...mapState({
-        mchtInfo: state => state.globalStore.mchtInfo,
+        mchtInfo: state => state.global.mchtInfo,
         planCardItem: state => state.home.cardItem,
     }),
     /*payAmt2() {

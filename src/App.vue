@@ -10,37 +10,28 @@
 </template>
 
 <script>
-import { Actionsheet, XHeader, TransferDom } from 'vux'
+// import { Actionsheet, XHeader, TransferDom } from 'vux'
 import { mapState, mapActions, mapGetters } from 'vuex'
 
 export default {
-  directives: {
+  /*directives: {
     TransferDom
   },
   components: {
     XHeader,
     Actionsheet
-  },
+  },*/
   data() {
     return {
       appLoadDoneFlag: false
     }
   },
   created () {
-    // 获取token
-    let vm = this
-    if(vm.getRuntime() === "iboxpay") {
-      vm.$iBox.cashbox.callNative("getToken", {}, (res) => {
-        let data = res.data || {};
-        if(res.status==1 && data.userToken) {
-          vm.$store.commit("GLOBAL_MUTATION_SET_TOKEN", data.userToken)
-          vm.init()
-        } else {
-          vm.$vux.toast.show({type: 'text', text: '钱盒信息拉取失败', isShowMask: true})
-        }
-      })
+    let runtime = this.getRuntime()
+    if (runtime == "weixin") {
+      this.init()
     } else {
-      vm.init()
+      this.init()
     }
   },
   methods: {
@@ -48,21 +39,20 @@ export default {
       'getRuntime'
     ]),
     ...mapActions([
-      'getMchtInfo',
-      'getCreditCardList'
+      'getMchtInfo'
     ]),
     init() {
       // 商户信息
       this.getMchtInfo().then(res => {
         this.appLoadDoneFlag = true
       }).catch(err => {
-        if(err._type === "forbidden") {
+        /*if(err._type === "forbidden") {
           this.appLoadDoneFlag = true
           this.$router.replace({
             name:"publicResult",
             params:{ resultState:"3" }
           })
-        }
+        }*/
       })
       // 信用卡列表信息
       this.$store.dispatch("getCreditCardList")
@@ -73,8 +63,8 @@ export default {
         route: state => state.route,
         routeName: state => state.route.name,
         routePath: state => state.route.path,
-        backToCashboxRoutes: state => state.globalStore.headerOptions.backToCashboxRoutes,
-        backToHomeRoutes: state => state.globalStore.headerOptions.backToHomeRoutes
+        backToCashboxRoutes: state => state.global.headerOptions.backToCashboxRoutes,
+        backToHomeRoutes: state => state.global.headerOptions.backToHomeRoutes
     }),
     title () {
       let route = this.route, meta = route.meta
@@ -82,7 +72,7 @@ export default {
     }
   },
   watch: {
-    routePath (newPath, oldPath) {
+    title (newPath, oldPath) {
       // 设置钱盒头部标题
       /*this.$iBox.cashbox.callNative('Nav.title', {
         title: newVal || "超级还款"
@@ -108,23 +98,21 @@ export default {
         })
       }, 10)*/
 
-      this.$iBox.cashbox.callNative('Nav.setAll', {
-        title: this.title,
-        backID: 999,
-        backEnable: false
-      }, (resp={}) => {
-        let status = resp.status
-        let data = resp.data
-        if(status == '1' && data.menuClicked == 999){
-          if(this.backToCashboxRoutes.includes(this.routeName)) {
-            this.$iBox.cashbox.exit();
-          } else if(this.backToHomeRoutes.includes(this.routeName)) {
-            this.$router.replace({name:"home"});
-          } else {
-            this.$router ? this.$router.back() : window.history.back()
-          }
-        }
-      })
+
+      window.onback = function() {
+        console.log("title>>>>", this.title)
+      }
+
+      document.title = this.title
+      /*if(this.backToCashboxRoutes.includes(this.routeName)) {
+        try {
+          WeixinJSBridge.invoke("closeWindow", {}, function(e){})
+        } catch(err) { console.log("WeixinJSBridge") }
+      } else if(this.backToHomeRoutes.includes(this.routeName)) {
+        this.$router.replace({name:"home"});
+      } else {
+        this.$router ? this.$router.back() : window.history.back()
+      }*/
     }
   }
 }

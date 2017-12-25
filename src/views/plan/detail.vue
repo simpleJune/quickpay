@@ -114,7 +114,7 @@ export default {
       return `还款计划(还款 ${this.plan.repayInfo}，消费${this.plan.expendInfo})`
     },
     ...mapState({
-      creditCardList: state => state.globalStore.creditCardList
+      creditCardList: state => state.global.creditCardList
     })
   },
   methods: {

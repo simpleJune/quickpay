@@ -51,8 +51,8 @@ export default {
   },
   computed: {
     ...mapState({
-        creditCardList: state => state.globalStore.creditCardList,
-        mchtInfo: state => state.globalStore.mchtInfo
+        creditCardList: state => state.global.creditCardList,
+        mchtInfo: state => state.global.mchtInfo
     }),
     card_list() {
       return this.creditCardList.filter((cardItem) => {

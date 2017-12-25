@@ -50,25 +50,7 @@ const actions = {
   getMchtInfo ({ commit }, params = {}) {
     return handleRequest('baseUrl.getMchtInfo')(params, {isLoading:true})
     .then(res => {
-      // 普通商户，个体商户，开放注册
-      if(
-        !/B1|B2|A3/ig.test(res.mchtKind)
-      ) {
-        return Promise.reject(Object.assign({_type:"forbidden"}, res))
-      } else {
-        // 推荐注册商户和收银员角色用户不支持使用；
-        // 对公账户、代理结算的商户不支持该功能；
-        if(
-          res.userPrimary == "0" || // 收银员
-          res.acctType == "0" || // 对公账户
-          res.acctProxy == "1" // 代理结算商户
-        ) {
-          return Promise.reject(Object.assign({_type:"forbidden"}, res))
-        } else {
-          commit('GLOBAL_MUTATION_GET_MCHTIFNO', res)
-          return res
-        }
-      }
+      return res
     })
   },
   // 根据token获取信用卡列表
@@ -92,8 +74,8 @@ const getters = {
   // 获取当前执行环境
   getRuntime (state) {
     var ua = window.navigator.userAgent.toLowerCase();
-    if (ua.indexOf("iboxpaywebview") != -1) {
-      return 'iboxpay';
+    if (ua.indexOf("micromessenger") != -1) {
+      return 'weixin';
     } else {
       return ""; // 其它
     }

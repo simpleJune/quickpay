@@ -6,7 +6,6 @@ Vue.use(AjaxPlugin)
 
 // 全局配置
 const axiosDefault = {
-  // baseURL: '/fspf-credit-center',
   timeout: 60000,
   headers: {
     'Content-Type': 'application/json;charset=UTF-8'
@@ -24,20 +23,17 @@ const instance = Vue.http.create(axiosDefault) // 创建axios通用规则
 instance.interceptors.request.use(
   config => {
     let data = config.data || {}
-    console.log("postData:", data)
 
-    let ADKey = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCf+dvg7ouhRAiRZ1IUjDOGjv6o3" +
-        "SedYDVZs41y0SysvvWusjKuw4TnkPARVJfmBnsUIHAx9XL/fM5F/ZJ5/9LSe28zUolqs6qm/" +
-        "yxQpsHoZYSxD+sKQgQI5x8RlOmutnoCy1ZX23lo5IjgWJTrhVfjmmnqdWfXeNzG5WiTmNuqOQIDAQAB"
+    console.log("postData:", data)
 
     // 传输加密
     let paramsStr = JSON.stringify(data),
-        RSAKey = Vue.iBox.security.encryptByRSA(new Date().getTime()+"", /[getAdList]\.json$/ig.test(config.url)? ADKey:"");
+        RSAKey = Vue.iBox.security.encryptByRSA(new Date().getTime()+"");
     let postData = {
       encryptStr: Vue.iBox.security.encryptByDES(paramsStr, RSAKey),
       desKey: RSAKey
     };
-    config.data = /[sendSmsCode]\.json$/ig.test(config.url)? data:postData
+    config.data = postData
     return config
   },
   handleErr

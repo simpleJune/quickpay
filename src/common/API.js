@@ -29,17 +29,13 @@ const handleRequest = (url = '') => {
       url: _url,
       data: { needRefresh: 'YES', ...data },
       headers: {
-        Token: token
+        accessToken: token
       },
       method: _config.method
     }).then(resp => {
       _config.isLoading && Vue.$vux.loading.hide()
       // 成功返回
-      if(resp.resultCode === '1') {
-        // 如果有token带回则更新tokenStore
-        if(resp.token) {
-          store.commit("GLOBAL_MUTATION_SET_TOKEN", resp.token)
-        }
+      if(resp.code == '1') {
         // 如果需要提示成功
         _config.isToast && Vue.$vux.toast.show({text: '操作成功', isShowMask: true})
         return resp

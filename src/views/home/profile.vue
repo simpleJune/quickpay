@@ -106,7 +106,7 @@ export default {
     line-height: 24/@unit;
     // margin-top: 10/@unit;
     >i {
-      width: 24/@unit;
+      width: 18/@unit;
       height: 24/@unit;
       display: block;
       float: left;

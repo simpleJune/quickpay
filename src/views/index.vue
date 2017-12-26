@@ -73,6 +73,7 @@ const CARD_STATUS_MAP = {
 }
 
 export default {
+  name: "page-home",
   components: {
     Grid,
     GridItem,

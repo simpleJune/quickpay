@@ -3,12 +3,13 @@ import Vue from 'vue'
 import { store } from '~store'
 
 // API
-const basePrefix = '/mock-credit-quick-api' // 综合系统(信用卡)
+const basePrefix = '/mock-credit-quick-api' // 综合服务
 
 const API = {
 	// 综合服务
   'baseUrl.getMchtInfo': `${basePrefix}/getMchtInfo`, // 获取商户信息
   'baseUrl.getCreditCardList': `${basePrefix}/getCreditCardList`, // 获取商户信息
+  'baseUrl.sendSmsCode': `${basePrefix}/sendSmsCode`, // 发送验证码
 }
 
 const handleRequest = (url = '') => {

@@ -44,7 +44,7 @@ const actions = {
   sendSmsCode ({ commit }, params = {}) {
     params.messageType = 'credit_center_code' // 公用钱盒信用卡参数
     params.subType = '9008' // 公用钱盒信用卡参数
-    return handleRequest('globalUrl.sendSmsCode')(params)
+    return handleRequest('baseUrl.sendSmsCode')(params, {isToast:true})
   },
   // 根据token获取商户信息
   getMchtInfo ({ commit }, params = {}) {

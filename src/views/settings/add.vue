@@ -50,7 +50,6 @@
 import { XHeader, Group, XInput, XButton } from 'vux'
 import { mapState, mapActions } from 'vuex'
 import VCode from '~components/VCode.vue'
-import SelectBank from './select.vue'
 
 export default {
   name: 'add-credit-card',
@@ -59,8 +58,7 @@ export default {
     Group,
     XInput,
     XButton,
-    VCode,
-    SelectBank
+    VCode
   },
   data () {
     return {

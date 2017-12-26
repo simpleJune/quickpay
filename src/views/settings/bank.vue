@@ -62,34 +62,10 @@ export default {
   },
   methods: {
     onClickMenu(menuKey) {
-      const { userCardId, status } = this.selectedCard
-      const vm = this
-      if (menuKey === 'edit') {
-        let path = `/bank/edit/editFlag/${userCardId}` // 修改
-        // 待完善
-        if (status == 2){
-          path = `/bank/edit/perfectFlag/${userCardId}`
-        } else if ( status == 3) { // 审核中
-          path = { name:'publicResult', params:{ resultState:"2" } }
-        }
-        this.$router.push(path)
-      }else if (menuKey === 'unbind'){
-        this.$vux.confirm.show({
-          title: ' ',
-          content: '确定解除绑定?',
-          onConfirm() {
-            let params = {
-              userCardId: userCardId
-            }
-            vm.unBindCreditCard(params)
-            .catch(err => {})
-          }
-        })
-      }
+
     },
     onClickCardItem(cardItem) {
-      this.showAction = true
-      this.selectedCard = cardItem
+
     },
     ...mapActions(['unBindCreditCard', 'getCreditCardList'])
   },
@@ -103,16 +79,12 @@ export default {
 <style lang="less">
 @import "~assets/less/base/common";
 
-@page-bank-bgColor: #313030;
-@page-bank-font-color-white: #DCDCDC;
-@page-bank-bgColor-black: #414141;
-
 .page-bank__index {
 	width: 100%;
 	min-height: 667/@unit;
 	height: auto;
 	overflow: hidden;
-	background-color: @page-bank-bgColor;
+	// background-color: @page-bank-bgColor;
   &.fixed {
     .page-bank__group {
       padding-bottom: 54/@unit;
@@ -136,7 +108,7 @@ export default {
 }
 
 .page-bank__add {
-  background: @page-bank-bgColor-black;
+  background: @bgColor-white;
   width: 100%;
   .add-btn {
     height: 44/@unit;
@@ -146,7 +118,6 @@ export default {
       display: block;
       width: 100%;
       height: inherit;
-      color: @page-bank-font-color-white;
     }
   }
 }

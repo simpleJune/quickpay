@@ -1,5 +1,5 @@
 <template>
-	<div class="page-settings">
+	<div class="page-settings_card">
     <group title="基本信息">
       <cell title="商户名称" value="中商平价超市"></cell>
       <cell title="姓名" value="何锋"></cell>
@@ -36,7 +36,9 @@ export default {
 
   },
   methods: {
-    ...mapActions(['unBindCreditCard', 'getCreditCardList'])
+    ...mapActions([
+      ''
+    ])
   },
   mounted() {
 
@@ -47,11 +49,5 @@ export default {
 <style lang="less">
 @import "~assets/less/views/public";
 
-.page-settings {
-  .weui-cell__ft {
-    color: @font-color-black;
-    font-size: @font-size-14;
-  }
-}
 
 </style>

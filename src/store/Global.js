@@ -35,7 +35,7 @@ const mutations = {
   },
   // 获取银行卡列表
   GLOBAL_MUTATION_GET_CREDITLIST (state, payload) {
-    state.creditCardList = payload.resultList || []
+    state.creditCardList = payload.data || []
   }
 }
 

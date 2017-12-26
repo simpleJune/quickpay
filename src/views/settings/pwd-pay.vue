@@ -4,15 +4,14 @@
       <cell title="商户名称" value="中商平价超市"></cell>
       <cell title="姓名" value="何锋"></cell>
       <cell title="身份证号码" value="422302************3910"></cell>
-      <cell title="手机号" value="136****5555" :is-link="true" link="/settings/mobile"></cell>
+      <cell title="手机号" value="136****5555" :is-link="true"></cell>
     </group>
     <group title="银行卡">
-      <cell title="结算卡号" value="621226********236" :is-link="true" link="/settings/card"></cell>
-      <cell title="信用卡管理" value="" :is-link="true" link="/settings/bank"></cell>
+      <cell title="结算卡号" value="621226********236"></cell>
+      <cell title="信用卡管理" value="" :is-link="true"></cell>
     </group>
     <group title="用户设置">
-      <cell title="修改登录密码" value="" :is-link="true" link="/settings/pwd"></cell>
-      <cell title="修改支付密码" value="" :is-link="true" link="/settings/pwd-pay"></cell>
+      <cell title="修改登录密码" value="" :is-link="true"></cell>
     </group>
   </div>
 </template>

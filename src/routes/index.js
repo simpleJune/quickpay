@@ -2,17 +2,19 @@ import Vue from 'vue'   //引入vue
 import VueRouter from 'vue-router'   //引入vue-router
 
 import HomeRouter from '~routes/home/router'
-import SettingsRouter from '~routes/settings/router'
 import PlanRouter from '~routes/plan/router'
 import BillRouter from '~routes/bill/router'
+import BankRouter from '~routes/bank/router'
 import PublicRouter from '~routes/public/router'
+import SettingsRouter from '~routes/settings/router'
 
 const routes = [
   ...HomeRouter,
-  ...SettingsRouter,
   ...PlanRouter,
   ...BillRouter,
-  ...PublicRouter
+  ...BankRouter,
+  ...PublicRouter,
+  ...SettingsRouter
 ]
 
 const router = new VueRouter({

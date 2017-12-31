@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import {JSEncrypt} from 'jsencrypt/bin/jsencrypt'
+import { JSEncrypt } from 'jsencrypt/bin/jsencrypt'
 import CryptoJS from 'crypto-js/crypto-js'
 
 // 正则匹配
@@ -142,83 +142,83 @@ const validator = {
 }
 
 // h5-native
-const cashbox = {
-  /**
-   * 调用钱盒Native方法
-   * @param methodName - 方法名
-   * @param paramMap - 参数
-   * @param cb - 响应回调
-   * @param flag - 该参数用来标识是否删除页面多余的iframe
-   *
-   */
-  callNative(methodName, paramMap, cb, flag) {
-    var isAndroid = -1 !== navigator.userAgent.toLowerCase().indexOf("android");
-    //android js bridge
-    !function (undefined) {
-      var NAMESPACE = 'iBoxpay';
-      var API_NAMESPACE = "__JSBridge__"
-      var context = window[NAMESPACE] = {};
-      var api = window[API_NAMESPACE] || null;
-      if (!api) {
-        return;
-        //return alert('发生错误, 未找到 api 对象!');
-      }
-      context.require = function (cmd, params, callback) {
-        params = params || '{}';
-        var result = api.require(cmd, JSON.stringify(params));
-        if (callback && result) {
-          result = JSON.parse(result);
-          callback(result);
-        }
-      }
-    }();
-    var callbackName = 'cb' + (new Date().getTime());
-    paramMap == null ? paramMap = {} : paramMap = paramMap;
-    paramMap["callbackName"] = callbackName;
-    //paramMap["myCallback"]=cb;
-    var strJsonParam = JSON.stringify(paramMap);
-    var jsonResp = {};
-    window[callbackName] = function (strResp) {
-      //alert("回调:"+JSON.stringify(strResp));
-      try {
-        jsonResp = typeof strResp == "string" ? eval(strResp) : strResp;
-      } catch (err) {
-      }
-      cb && cb(jsonResp);
-      //执行回调后，删除跟回调方法相关的资源
-      if (isAndroid) {
-        if (flag) {
-        } else {
-          delete window[callbackName];
-        }
-      } else {
-        document.getElementById('iframe_' + callbackName).remove();
-        // $('#iframe_' + callbackName).remove();
-      }
-    };
-    if (isAndroid) {
-      try {
-        iBoxpay.require(methodName, paramMap, window[callbackName]);
-      } catch (err) {
-        console.log(err);
-      }
-    } else {
-      var src = 'callfunction://' + methodName + '?callback=' + callbackName + '&params=' + strJsonParam;
-      var ifreame = document.createElement("iframe");
-      ifreame.id = "iframe_" + callbackName;
-      ifreame.src = src;
-      ifreame.style.display = "none";
-      document.body.appendChild(ifreame);
-    }
-  },
-  go(url) {
-      this.callNative('WebView.create', {url:url}, function(res) {});
-  },
-  // 退出钱盒
-  exit() {
-      this.callNative('WebView.close', {}, function(res) {});
-  }
-}
+// const cashbox = {
+//   /**
+//    * 调用钱盒Native方法
+//    * @param methodName - 方法名
+//    * @param paramMap - 参数
+//    * @param cb - 响应回调
+//    * @param flag - 该参数用来标识是否删除页面多余的iframe
+//    *
+//    */
+//   callNative(methodName, paramMap, cb, flag) {
+//     var isAndroid = -1 !== navigator.userAgent.toLowerCase().indexOf("android");
+//     //android js bridge
+//     !function (undefined) {
+//       var NAMESPACE = 'iBoxpay';
+//       var API_NAMESPACE = "__JSBridge__"
+//       var context = window[NAMESPACE] = {};
+//       var api = window[API_NAMESPACE] || null;
+//       if (!api) {
+//         return;
+//         //return alert('发生错误, 未找到 api 对象!');
+//       }
+//       context.require = function (cmd, params, callback) {
+//         params = params || '{}';
+//         var result = api.require(cmd, JSON.stringify(params));
+//         if (callback && result) {
+//           result = JSON.parse(result);
+//           callback(result);
+//         }
+//       }
+//     }();
+//     var callbackName = 'cb' + (new Date().getTime());
+//     paramMap == null ? paramMap = {} : paramMap = paramMap;
+//     paramMap["callbackName"] = callbackName;
+//     //paramMap["myCallback"]=cb;
+//     var strJsonParam = JSON.stringify(paramMap);
+//     var jsonResp = {};
+//     window[callbackName] = function (strResp) {
+//       //alert("回调:"+JSON.stringify(strResp));
+//       try {
+//         jsonResp = typeof strResp == "string" ? eval(strResp) : strResp;
+//       } catch (err) {
+//       }
+//       cb && cb(jsonResp);
+//       //执行回调后，删除跟回调方法相关的资源
+//       if (isAndroid) {
+//         if (flag) {
+//         } else {
+//           delete window[callbackName];
+//         }
+//       } else {
+//         document.getElementById('iframe_' + callbackName).remove();
+//         // $('#iframe_' + callbackName).remove();
+//       }
+//     };
+//     if (isAndroid) {
+//       try {
+//         iBoxpay.require(methodName, paramMap, window[callbackName]);
+//       } catch (err) {
+//         console.log(err);
+//       }
+//     } else {
+//       var src = 'callfunction://' + methodName + '?callback=' + callbackName + '&params=' + strJsonParam;
+//       var ifreame = document.createElement("iframe");
+//       ifreame.id = "iframe_" + callbackName;
+//       ifreame.src = src;
+//       ifreame.style.display = "none";
+//       document.body.appendChild(ifreame);
+//     }
+//   },
+//   go(url) {
+//       this.callNative('WebView.create', {url:url}, function(res) {});
+//   },
+//   // 退出钱盒
+//   exit() {
+//       this.callNative('WebView.close', {}, function(res) {});
+//   }
+// }
 
 // 安全加密
 const security = {
@@ -228,14 +228,14 @@ const security = {
    * @param val
    * @returns {string}
    */
-  encryptByRSA(val, key) {
+  encryptByRSA(val) {
     var encrypt = new JSEncrypt();
 
     // 设置密钥
-    encrypt.setPublicKey(key ||
-      "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDC/UmMAD4yul1scK+h1YgnvDrc1KZ2Y38" +
-      "CMD79xc0mPxNqe0R24maoo4Yq3cTRiD9mVOv5URZt6fuQNN227CS1xMq2kZn2xzY2GOdvBC" +
-      "bwa2caxhk9hLPAcrf1MbF621iXz54UVlpK+h0qK7WLdeUGDWQBlDnLZ2lulMvYMtGKAQIDAQAB"
+    encrypt.setPublicKey(
+      "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDEF64RKjCjwkX9gBwJxEphID8IoaCdViAr" +
+      "154jWCgqSFXN7/j9ItoyP6lLYR7Q0+r/rExleh2T20Jm2xplX32QQ1GmLJSiin3BPluuJK5k" +
+      "Gsh5BmGIN6a+xXwDYFLg50++00uG6/V4gxM7QZVL5yuAm3pL6jrhBk3w4D3MTeQmOwIDAQAB"
     );
 
     return encrypt.encrypt(val);
@@ -249,7 +249,7 @@ const security = {
    */
   encryptByDES(rsa, key) {
     var keyHex = CryptoJS.enc.Utf8.parse(key);
-    var encrypted = CryptoJS.DES.encrypt(rsa, keyHex, {
+    var encrypted = CryptoJS.AES.encrypt(rsa, keyHex, {
       mode: CryptoJS.mode.ECB,
       padding: CryptoJS.pad.Pkcs7
     });
@@ -266,7 +266,7 @@ const security = {
     var keyHex = CryptoJS.enc.Utf8.parse(key);
 
     // direct decrypt ciphertext
-    var decrypted = CryptoJS.DES.decrypt({
+    var decrypted = CryptoJS.AES.decrypt({
       ciphertext: CryptoJS.enc.Base64.parse(ciphertext)
     }, keyHex, {
       mode: CryptoJS.mode.ECB,
@@ -294,7 +294,7 @@ const helper = {
 
 export default {
   validator,
-  cashbox,
+  // cashbox,
   security,
   helper
 }

@@ -39,7 +39,7 @@ module.exports = {
       },
       '/credit-quick-api': {
         changeOrigin: true,
-        target: 'https://ip:port/credit-quick-api/rest', // 模拟数据
+        target: 'http://192.168.1.124:8080/credit-quick-api/rest', // 模拟数据
         pathRewrite: {
           '^/credit-quick-api': ''
         }

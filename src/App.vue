@@ -43,7 +43,11 @@ export default {
     ]),
     init() {
       // 商户信息
-      this.getMchtInfo().then(res => {
+      this.getMchtInfo({
+        name: "hefeng",
+        mobile: "13662691961",
+        mchtName: "和风评价超市"
+      }).then(res => {
         this.appLoadDoneFlag = true
       }).catch(err => {
         /*if(err._type === "forbidden") {

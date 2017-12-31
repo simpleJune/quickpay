@@ -3,11 +3,7 @@
     <group>
       <cell title="手机号" value="136****6666"></cell>
       <v-code ref="VCode" :verifyCode.sync="postData.vcode" @sendCodeMsg="sendCodeMsg()"></v-code>
-      <!-- <x-input type="text" title="身份证号码" placeholder="您本人身份证号码"></x-input> -->
-    </group>
-    <group>
-      <x-input type="number" title="新密码" placeholder="6位数字支付密码"></x-input>
-      <x-input type="number" title="确认新密码" placeholder="再次输入以确认"></x-input>
+      <x-input type="text" title="身份证号码" placeholder="您本人身份证号码"></x-input>
     </group>
     <div class="page-row__btn">
       <x-button type="primary"
@@ -15,7 +11,7 @@
         :disabled="!pageOptions.isActive"
         :show-loading="pageOptions.isLoading"
         @click.native="onClickSubmit"
-      >确认修改</x-button>
+      >确认</x-button>
     </div>
   </div>
 </template>

@@ -1,6 +1,7 @@
 // 引入axios库
 import Vue from 'vue'
 import { AjaxPlugin } from 'vux'
+import { store } from '~store'
 
 Vue.use(AjaxPlugin)
 
@@ -22,16 +23,25 @@ const instance = Vue.http.create(axiosDefault) // 创建axios通用规则
 // http request 请求拦截器
 instance.interceptors.request.use(
   config => {
-    let data = config.data || {}
+    let params = config.data || {}
+    let data = {}
+
+    // 请求头
+    data.header = {
+      accessToken: store.getters.getToken
+    }
+    // 请求参数
+    data.body = params
 
     console.log("postData:", data)
 
     // 传输加密
+    let aesKey = "UMrtmcM108My8SM7"
     let paramsStr = JSON.stringify(data),
-        RSAKey = Vue.iBox.security.encryptByRSA(new Date().getTime()+"");
+        RSAKey = Vue.iBox.security.encryptByRSA(aesKey);
     let postData = {
-      encryptStr: Vue.iBox.security.encryptByDES(paramsStr, RSAKey),
-      desKey: RSAKey
+      data: Vue.iBox.security.encryptByDES(paramsStr, aesKey),
+      sign: RSAKey
     };
     config.data = postData
     return config

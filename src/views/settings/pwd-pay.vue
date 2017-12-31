@@ -5,6 +5,15 @@
     </div>
     <!--密码框-->
     <password id="J_keyboard-pwd" v-model="postData.pwdValue"></password>
+    <!--修改按钮-->
+    <div class="page-row__btn">
+      <x-button type="primary"
+        action-type="button"
+        :disabled="!pageOptions.isActive"
+        :show-loading="pageOptions.isLoading"
+        @click.native="onClickSubmit"
+      >确认修改</x-button>
+    </div>
     <!--数字键盘-->
     <keyboard type="number"
       :options="keyboardOptions"
@@ -16,6 +25,7 @@
 </template>
 
 <script>
+import { XButton } from 'vux'
 import { mapState, mapActions } from 'vuex'
 import Password from '~components/Password'
 import Keyboard from '~components/Keyboard'
@@ -23,6 +33,7 @@ import Keyboard from '~components/Keyboard'
 export default {
   name: 'page-settings-payPwd',
   components: {
+    XButton,
     Password,
     Keyboard
   },

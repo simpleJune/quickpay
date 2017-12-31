@@ -8,7 +8,7 @@
         <p>收款</p>
       </li>
       <li class="pay">
-        <router-link to="/bank/add">
+        <router-link to="">
           <img src="~assets/less/icon/pay.png">
         </router-link>
         <p>还款</p>
@@ -154,6 +154,9 @@ export default {
       text-align: center;
       color: @font-color-white;
       font-size: 1.8*@font-size-10;
+    }
+    &.pay {
+      opacity: .2;
     }
   }
   .iBox-fn__clearfix()

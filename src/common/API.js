@@ -1,6 +1,5 @@
 import request from '~common/Ajax'
 import Vue from 'vue'
-import { store } from '~store'
 
 // API
 const basePrefix = '/mock-credit-quick-api' // 综合服务
@@ -16,7 +15,6 @@ const handleRequest = (url = '') => {
   let _url = API[url] || ''
 
   return (data = {}, config = {}) => {
-    let token = store.getters.getToken
     let _config = {
       isLoading: false,
       isTip: true,
@@ -29,9 +27,6 @@ const handleRequest = (url = '') => {
     return request({
       url: _url,
       data: { needRefresh: 'YES', ...data },
-      headers: {
-        accessToken: token
-      },
       method: _config.method
     }).then(resp => {
       _config.isLoading && Vue.$vux.loading.hide()

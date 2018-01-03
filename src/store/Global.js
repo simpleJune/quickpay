@@ -15,7 +15,7 @@ const state = {
       "publicResult",
     ]
 	},
-  token: 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0b2tlbiIsIm5iZiI6MTUxMzkzNjU1NiwiZGF0YSI6eyJicmhObyI6IjAwMTAwMSIsIm1jaHRObyI6IjAwMTQ0MDM5NTAwNDk1OSIsInVzZXJQaG9uZSI6IjE4OTI3NDMwNzQyIiwidXNlcklkIjoyMDAwNTE3NX0sIm1jaHRObyI6IjAwMTQ0MDM5NTAwNDk1OSIsImlzcyI6Imlib3hwYXktbWNodC10b2tlbi1zZXJ2ZXIiLCJleHAiOjE1MTM5NjUzNTYsInVzZXJJZCI6MjAwMDUxNzUsImlhdCI6MTUxMzkzNjU1Nn0.NU6LASNxViEvMALFAHbuvk4lYTv4j3oHZY_wB6WvyI0',
+  token: 'xxxx',
   mchtInfo: {},
   creditCardList: []
 }

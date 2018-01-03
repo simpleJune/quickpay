@@ -23,15 +23,16 @@ export default {
   },*/
   data() {
     return {
-      appLoadDoneFlag: false
+      appLoadDoneFlag: false,
+      appId: "wxb50e02101aea7da9"
     }
   },
   created () {
     let runtime = this.getRuntime()
     if (runtime == "weixin") {
-      this.init()
+      this.initWX()
     } else {
-      this.init()
+      this.initWX()
     }
   },
   methods: {
@@ -39,27 +40,45 @@ export default {
       'getRuntime'
     ]),
     ...mapActions([
-      'getMchtInfo'
+      'getOpenId'
     ]),
-    init() {
-      // 商户信息
-      this.getMchtInfo({
-        name: "hefeng",
-        mobile: "13662691961",
-        mchtName: "和风评价超市"
+    initWX() {
+      let code = ""
+      // console.log("code>>>>", this.$iBox.helper.getURLParam("code"))
+      // if(!(code = this.$iBox.helper.getURLParam("code"))) {
+      //   let url = window.location.href
+      //   console.log(url)
+      //   // window.location.href = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${this.appId}&redirect_uri=${encodeURIComponent(url)}&response_type=code&scope=snsapi_base#wechat_redirect`
+      // } else {
+      //   this.getOpenId(code);
+      // }
+
+      this.getOpenId({
+        code: "011rQWFa12wVRt06mGHa17p1Ga1rQWFt"
       }).then(res => {
         this.appLoadDoneFlag = true
-      }).catch(err => {
-        /*if(err._type === "forbidden") {
-          this.appLoadDoneFlag = true
-          this.$router.replace({
-            name:"publicResult",
-            params:{ resultState:"3" }
-          })
-        }*/
-      })
+        this.$router.push({ name:"register" })
+      });
+    },
+    init() {
+      // 商户信息
+      // this.getMchtInfo({
+      //   name: "hefeng",
+      //   mobile: "13662691961",
+      //   mchtName: "和风评价超市"
+      // }).then(res => {
+      //   this.appLoadDoneFlag = true
+      // }).catch(err => {
+      //   /*if(err._type === "forbidden") {
+      //     this.appLoadDoneFlag = true
+      //     this.$router.replace({
+      //       name:"publicResult",
+      //       params:{ resultState:"3" }
+      //     })
+      //   }*/
+      // })
       // 信用卡列表信息
-      this.$store.dispatch("getCreditCardList")
+      // this.$store.dispatch("getCreditCardList")
     }
   },
   computed: {

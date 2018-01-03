@@ -14,41 +14,30 @@ const state = {
       "public404",
       "publicResult",
     ]
-	},
-  token: 'xxxx',
-  mchtInfo: {},
-  creditCardList: []
+  },
+  // 请求参数header
+  headerParams: {
+    accessToken: '61983ce78f1e4419847e10f91aedc9b7', // 用户token
+    merchantNo: '509495858115379200', // 商户编号
+    sysSource: 'H5', // 来源
+    channel: '微信', // 渠道
+    partnerCode: '10050', // 机构编号
+    clientIP: '127.0.0.1' // 客户端IP
+  },
+  // 微信授权跳转地址
+  authorizeUrl: "https://open.weixin.qq.com/connect/oauth2/authorize?appid=${this.appId}&redirect_uri=${encodeURIComponent(url)}&response_type=code&scope=snsapi_base#wechat_redirect"
 }
 
 const mutations = {
-  // 重置header options到默认值
-  GLOBAL_MUTATION_HEADER_RESET (state, options) {
-
-  },
-  // 设置token
-  GLOBAL_MUTATION_SET_TOKEN (state, payload) {
-    state.token = payload
-  },
-  // 获取用户信息
-  GLOBAL_MUTATION_GET_MCHTIFNO (state, payload) {
-    state.mchtInfo = payload
-  },
-  // 获取银行卡列表
-  GLOBAL_MUTATION_GET_CREDITLIST (state, payload) {
-    state.creditCardList = payload.data || []
+  GLOBAL_MUTATION_TOKEN(state, token) {
+    state.headerParams.accessToken = token
   }
 }
 
 const actions = {
-  // 发送验证码短信
+  // 根据token获取信用卡列表
   sendSmsCode ({ commit }, params = {}) {
-    params.messageType = 'credit_center_code' // 公用钱盒信用卡参数
-    params.subType = '9008' // 公用钱盒信用卡参数
-    return handleRequest('baseUrl.sendSmsCode')(params, {isToast:true})
-  },
-  // 根据token获取商户信息
-  getMchtInfo ({ commit }, params = {}) {
-    return handleRequest('baseUrl.getMchtInfo')(params, {isLoading:true})
+    return handleRequest('api.mobile')(params)
     .then(res => {
       return res
     })
@@ -80,9 +69,9 @@ const getters = {
       return ""; // 其它
     }
   },
-  // 获取token
-  getToken (state) {
-    return state.token;
+  // 获取headerParams
+  getHeaderParams (state) {
+    return state.headerParams;
   }
 }
 

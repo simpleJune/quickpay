@@ -28,7 +28,7 @@ instance.interceptors.request.use(
 
     // 请求头
     data.header = {
-      accessToken: store.getters.getToken
+      ...store.getters.getHeaderParams
     }
     // 请求参数
     data.body = params

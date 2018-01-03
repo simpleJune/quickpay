@@ -288,13 +288,72 @@ const helper = {
   Yfen(num) {
     var numStr = Number(num).toFixed(2) + "";
     return parseInt(numStr.replace(/^(\d+)\.?(\d)?(\d)?$/g, "$1$2$3")) + "";
-  }
+  },
+  
+	/**
+	 * 设置本地缓存
+	 * @param key
+	 * @param val
+	 * @return {string} 如果终端设备不支持sessionStorage则用URL传递参数
+	 */
+	setStorage(key, val) {
+		if (key === QP_DB) {
+			if (val === false) {
+				localStorage.removeItem(QP_DB);
+			} else {
+				localStorage.setItem(key, JSON.stringify(val));
+			}
+			return;
+		}
+
+		var DB = JSON.parse(localStorage.getItem(QP_DB) || "{}");
+		val = $.isPlainObject(val) ? JSON.stringify(val) : val;
+		val = util.encryptByDES(val, key);
+		DB[key] = val;
+
+		this.setStorage(QP_DB, DB);
+
+		/*if(window.sessionStorage) {
+		 sessionStorage.setItem(key, val);
+		 } else {
+		 url += key+"?"+ (key=='userId'?'userId':'params') +"="+val;
+		 }
+		 return url;*/
+		//return { status:1, data:{} }
+	},
+
+	/**
+	 * 获取session
+	 * @param key
+	 */
+	getStorage(key) {
+		var DB = JSON.parse(localStorage.getItem(QP_DB) || "{}"),
+			val = DB[key]; //window.sessionStorage? sessionStorage.getItem(key):util.getURLParam("params");
+
+		val && (val = util.decryptByDES(val, key));
+		val = /^\{.*\}$/g.test(val) ? JSON.parse(val) : val;
+
+		return val;
+	},
+
+	/**
+	 * 解析URL参数
+	 * @param {string} name URL的参数名
+	 * @returns {string}
+	 * @example
+	 *  util.getURLParam("param1") //decodeURIComponent
+	 */
+	getURLParam(name) {
+		var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+		var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+		if (r != null) return decodeURI(r[2]);
+		return ""; //返回参数值
+	}
 
 }
 
 export default {
   validator,
-  // cashbox,
   security,
   helper
 }

@@ -87,8 +87,7 @@ export default {
   },
   computed: {
     ...mapState({
-        mchtInfo: state => state.global.mchtInfo,
-        creditCardList: state => state.global.creditCardList
+        // creditCardList: state => state.home.creditCardList
     }),
     ads_list() {
       return [
@@ -108,10 +107,11 @@ export default {
     }).then((res=[]) => {
       this.ads_list = res
     })*/
+    
   },
   methods: {
     ...mapActions([
-      'getAdList'
+      ''
     ]),
 
   }

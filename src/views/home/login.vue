@@ -1,11 +1,8 @@
 <template>
   <div class="page-login">
-    <div class="logo">
-      <img src="~assets/images/logo.jpg">
-    </div>
     <div class="page-container">
-      <x-input type="tel" title="手机号" v-model="postData.mobile" placeholder="请输入您的手机号"></x-input>
-      <x-input type="password" title="密码" v-model="postData.pwd" placeholder="请输入登录密码"></x-input>
+      <x-input type="tel" title="手机号" v-model="postData.loginUser" placeholder="请输入您的手机号"></x-input>
+      <x-input type="password" title="密码" v-model="postData.password" placeholder="请输入登录密码"></x-input>
     </div>
     <div class="page-row__btn">
       <x-button type="primary"
@@ -14,6 +11,7 @@
         :show-loading="pageOptions.isLoading"
         @click.native="onClickSubmit"
       >提交</x-button>
+      <button type="button" class="weui-btn weui-btn_primary" @click="onClickLogout">退出登录</button>
     </div>
     <div class="page-row__info forgetPwd">
       <router-link to="/">忘记密码</router-link>
@@ -33,20 +31,17 @@ export default {
   data () {
     return {
       postData: {
-        mobile: '',
-        vcode: '',
-        pwd: ''
+        loginUser: '',
+        password: ''
       },
       pageOptions: {
-        isActive: false,
+        isActive: true,
         isLoading: false
       }
     }
   },
   computed: {
     ...mapState({
-      bankSelectObj: state => state.bankSelect.bankSelectObj,
-      mchtInfo: state => state.global.mchtInfo,
     }),
 
   },
@@ -55,22 +50,22 @@ export default {
   methods: {
     // actions的方法
     ...mapActions([
-        'sendSmsCode'
+        'login',
+        'logout'
     ]),
-    sendCodeMsg() {
-      let params = {
-        messageType: "credit_center_add_plan",
-        userPhone: this.postData.mobile
-      }
-      this.$refs.VCode.getCode()
-      this.sendSmsCode(params).then(() => {
+    onClickSubmit() {
+      this.login(this.postData)
+      .then((res={}) => {
         // TODO
-      }).catch(err => {
-         // this.$refs.VCode.codeReset()
+        console.log("login ok", res)
       })
     },
-    onClickSubmit() {
-      console.log("submit...")
+    onClickLogout() {
+      this.logout()
+      .then((res={}) => {
+        // TODO
+        console.log("logout ok", res)
+      })
     }
   }
 }

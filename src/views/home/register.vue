@@ -1,12 +1,9 @@
 <template>
   <div class="page-register">
-    <div class="logo">
-      <img src="~assets/images/logo.jpg">
-    </div>
     <div class="page-container">
-      <x-input type="tel" title="手机号" v-model="postData.mobile" placeholder="请输入注册手机号"></x-input>
-      <v-code ref="VCode" :verifyCode.sync="postData.vcode" @sendCodeMsg="sendCodeMsg()"></v-code>
-      <x-input type="password" title="密码" v-model="postData.pwd" placeholder="设置登录密码"></x-input>
+      <x-input type="tel" title="手机号" v-model="postData.loginUser" placeholder="请输入注册手机号"></x-input>
+      <v-code ref="VCode" :verifyCode.sync="postData.verifyCode" @sendCodeMsg="sendCodeMsg()"></v-code>
+      <x-input type="password" title="密码" v-model="postData.password" placeholder="设置登录密码"></x-input>
     </div>
     <div class="page-row__btn">
       <x-button type="primary"
@@ -33,20 +30,21 @@ export default {
   data () {
     return {
       postData: {
-        mobile: '',
-        vcode: '',
-        pwd: ''
+        loginUser: "",
+        verifyCode: '',
+        password: '',
+        // openId: '',
+        refereeMerchantNO: '504798616515248640'
       },
       pageOptions: {
-        isActive: false,
+        isActive: true,
         isLoading: false
       }
     }
   },
   computed: {
     ...mapState({
-      bankSelectObj: state => state.bankSelect.bankSelectObj,
-      mchtInfo: state => state.global.mchtInfo,
+      openId: state => state.home.openId,
     }),
 
   },
@@ -55,22 +53,30 @@ export default {
   methods: {
     // actions的方法
     ...mapActions([
-        'sendSmsCode'
+        'sendSmsCode',
+        'register'
     ]),
     sendCodeMsg() {
       let params = {
-        messageType: "credit_center_add_plan",
-        userPhone: this.postData.mobile
+        codeType: 1,
+        loginUser: this.postData.loginUser
       }
       this.$refs.VCode.getCode()
-      this.sendSmsCode(params).then(() => {
+      this.sendSmsCode(params)
+      .then(() => {
         // TODO
-      }).catch(err => {
+        this.postData.openId = this.openId
+        this.pageOptions.isActive = true
+      })
+      .catch(err => {
          // this.$refs.VCode.codeReset()
       })
     },
     onClickSubmit() {
-      console.log("submit...")
+      this.register(this.postData)
+      .then((res={}) => {
+        console.log("register ok", res)
+      })
     }
   }
 }

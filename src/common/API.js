@@ -2,12 +2,11 @@ import request from '~common/Ajax'
 import Vue from 'vue'
 
 // API
-const basePrefix = '/credit-quick-api' // 综合服务
+const basePrefix = '/mock-credit-quick-api' // 综合服务
 
 const API = {
 	// 综合服务
   'api.getopenid': `${basePrefix}/user/getopenid`, // 获取商户信息
-  'baseUrl.getCreditCardList': `${basePrefix}/getCreditCardList`, // 获取商户信息
   'api.mobile': `${basePrefix}/user/mobile`, // 发送验证码 
   'api.register': `${basePrefix}/user/register`, // 注册
   'api.login': `${basePrefix}/user/login`, // 登录

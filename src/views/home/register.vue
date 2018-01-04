@@ -8,7 +8,7 @@
     <div class="page-row__btn">
       <x-button type="primary"
         action-type="button"
-        :disabled="!pageOptions.isActive"
+        :disabled="!isActive"
         :show-loading="pageOptions.isLoading"
         @click.native="onClickSubmit"
       >提交</x-button>
@@ -33,11 +33,9 @@ export default {
         loginUser: "",
         verifyCode: '',
         password: '',
-        // openId: '',
-        refereeMerchantNO: '504798616515248640'
+        refereeMerchantNO: ''
       },
       pageOptions: {
-        isActive: true,
         isLoading: false
       }
     }
@@ -46,9 +44,17 @@ export default {
     ...mapState({
       openId: state => state.home.openId,
     }),
-
+    isActive() {
+      return (
+        this.$iBox.validator.isNotEmpty(this.postData.loginUser) &&
+        this.$iBox.validator.isNotEmpty(this.postData.verifyCode) &&
+        this.$iBox.validator.isNotEmpty(this.postData.password)
+      )
+    }
   },
-  mounted () {
+  created () {
+    // 推荐码
+    this.postData.refereeMerchantNO = this.$route.params.refereeMerchantNO
   },
   methods: {
     // actions的方法
@@ -64,18 +70,17 @@ export default {
       this.$refs.VCode.getCode()
       this.sendSmsCode(params)
       .then(() => {
-        // TODO
-        this.postData.openId = this.openId
-        this.pageOptions.isActive = true
+        //TODO
       })
       .catch(err => {
-         // this.$refs.VCode.codeReset()
+         this.$refs.VCode.codeReset()
       })
     },
-    onClickSubmit() {
+    onClickSubmit(evt) {
+      this.postData.openId = this.openId
       this.register(this.postData)
       .then((res={}) => {
-        console.log("register ok", res)
+        this.$router.push({name:"home"})
       })
     }
   }

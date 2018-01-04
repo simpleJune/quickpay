@@ -4,7 +4,7 @@
 import handleRequest from '~common/API'
 
 const state = {
-  openId: "o5hnM0prrEDkfW5p4WtrlN9Eg7bU"
+  openId: "",
 }
 
 const mutations = {
@@ -16,29 +16,14 @@ const mutations = {
 
 const actions = {
   // 获取微信端openId
-  getOpenId ({ state, commit }, params = {}) {
+  getOpenId ({ commit }, params = {}) {
     return handleRequest('api.getopenid')(params, {isLoading:true})
     .then((res={}) => {
-      let data = res.data// 未注册
-      let merchantStatus = data.merchantStatus + ""
-      let that = this
-
-      // switch(merchantStatus) {
-      //   case "-1":
-      //     that.$router.push({ name:'register' })
-      //     break;
-      //   case "0":
-      //     that.$router.push({ name:"register" })
-      //     break;
-      //   case "1":
-      //     that.$router.push({ name:"register" })
-      //     break;
-      //   default:
-      //     break;
-      // }
-      
-      commit('HOME_MUTATION_OPENID', data.openId||"o5hnM0prrEDkfW5p4WtrlN9Eg7bU")
-      return res
+      let data = res.data
+      commit('HOME_MUTATION_OPENID', data.openId) //||"o5hnM0prrEDkfW5p4WtrlN9Eg7bU"
+      commit('GLOBAL_MUTATION_MCHTNO', data.merchantNo)
+      commit('GLOBAL_MUTATION_TOKEN', data.accessToken)
+      return data
     })
   },
 

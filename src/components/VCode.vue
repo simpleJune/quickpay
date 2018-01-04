@@ -1,5 +1,5 @@
 <template>
-  <x-input type="tel" title="验证码" v-model="code" placeholder="请输入验证码" :show-clear="false" :max="verifyCodeQuantity">
+  <x-input type="tel" title="验证码" v-model="code" placeholder="请输入验证码" :show-clear="true" :max="verifyCodeQuantity">
     <button slot="right" class="mobile-code-btn" @click="sendCode()" :disabled="codeTime != 60">{{codeName}}</button>
   </x-input>
 </template>

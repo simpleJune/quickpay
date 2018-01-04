@@ -44,23 +44,36 @@ export default {
     ]),
     initWX() {
       let code = ""
-      // console.log("code>>>>", this.$iBox.helper.getURLParam("code"))
-      // if(!(code = this.$iBox.helper.getURLParam("code"))) {
-      //   let url = window.location.href
-      //   console.log(url)
-      //   // window.location.href = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${this.appId}&redirect_uri=${encodeURIComponent(url)}&response_type=code&scope=snsapi_base#wechat_redirect`
-      // } else {
-      //   this.getOpenId(code);
-      // }
-
-      this.getOpenId({
-        code: "011rQWFa12wVRt06mGHa17p1Ga1rQWFt"
-      }).then(res => {
-        this.appLoadDoneFlag = true
-        this.$router.push({ name:"register" })
-      });
+      if(!(code = this.$iBox.helper.getURLParam("code")||"xxxx")) {
+        let url = window.location.href
+        window.location.href = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${this.appId}&redirect_uri=${encodeURIComponent(url)}&response_type=code&scope=snsapi_base#wechat_redirect`
+      } else {
+        this.getOpenId({
+          code: code
+        }).then(res => {
+          this.appLoadDoneFlag = true
+          let merchantStatus = res.merchantStatus + ""
+          switch(merchantStatus) {
+            case "-1": // 未注册 merchantNo=504798616515248640&partnerCode=10050
+              let merchantNo = this.$iBox.helper.getURLParam("merchantNo")
+              merchantNo? //扫码注册|直接关注微信号登录
+                this.$router.push({ name:'register', params:{ refereeMerchantNO:merchantNo } }):
+                this.$router.push({name:"login"})
+              break;
+            case "0": // 未实名
+              this.$router.push({ name:"profile" })
+              break;
+            case "1": // 未设置支付密码
+              this.$router.push({ name:"pwd-pay" })
+              break;
+            case "3": // 正常
+            default:
+              break;
+          }
+        })
+      }
     },
-    init() {
+    initApp() {
       // 商户信息
       // this.getMchtInfo({
       //   name: "hefeng",

@@ -17,8 +17,8 @@ const state = {
   },
   // 请求参数header
   headerParams: {
-    accessToken: '61983ce78f1e4419847e10f91aedc9b7', // 用户token
-    merchantNo: '509495858115379200', // 商户编号
+    accessToken: '', // 用户token
+    merchantNo: '', // 商户编号
     sysSource: 'H5', // 来源
     channel: '微信', // 渠道
     partnerCode: '10050', // 机构编号
@@ -29,9 +29,14 @@ const state = {
 }
 
 const mutations = {
-  GLOBAL_MUTATION_TOKEN(state, token) {
-    state.headerParams.accessToken = token
-  }
+  // token
+  GLOBAL_MUTATION_TOKEN(state, payload) {
+    state.headerParams.accessToken = payload
+  },
+  // merchantNo
+  GLOBAL_MUTATION_MCHTNO (state, payload) {
+    state.headerParams.merchantNo = payload
+  },
 }
 
 const actions = {

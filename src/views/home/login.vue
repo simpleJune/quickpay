@@ -11,7 +11,6 @@
         :show-loading="pageOptions.isLoading"
         @click.native="onClickSubmit"
       >提交</x-button>
-      <button type="button" class="weui-btn weui-btn_primary" @click="onClickLogout">退出登录</button>
     </div>
     <div class="page-row__info forgetPwd">
       <router-link to="/">忘记密码</router-link>
@@ -43,28 +42,18 @@ export default {
   computed: {
     ...mapState({
     }),
-
   },
   mounted () {
   },
   methods: {
     // actions的方法
     ...mapActions([
-        'login',
-        'logout'
+        'login'
     ]),
     onClickSubmit() {
       this.login(this.postData)
       .then((res={}) => {
-        // TODO
-        console.log("login ok", res)
-      })
-    },
-    onClickLogout() {
-      this.logout()
-      .then((res={}) => {
-        // TODO
-        console.log("logout ok", res)
+        this.$router.push({name:"home"})
       })
     }
   }

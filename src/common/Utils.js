@@ -344,8 +344,8 @@ const helper = {
 	 *  util.getURLParam("param1") //decodeURIComponent
 	 */
 	getURLParam(name) {
-		var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
-		var r = window.location.hash.replace(/^(.*?)\?(.*)$/ig, "$2").match(reg);  //匹配目标参数
+		var reg = new RegExp("(^|&|\\?)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+		var r = window.location.href.replace(/^(.*?)\?(.*)$/ig, "$2").match(reg);  //匹配目标参数
 		if (r != null) return decodeURI(r[2]);
 		return ""; //返回参数值
   }

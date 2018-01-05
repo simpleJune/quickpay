@@ -123,6 +123,7 @@ export default {
 @import '~assets/less/base/common';
 
 .page-home {
+  margin-top: -16/@unit;
   background: url("~assets/images/bg.png") scroll no-repeat 0 0;
   background-size: 100% auto;
 }
@@ -139,9 +140,12 @@ export default {
   height: 160/@unit;
   >li {
     width: 50%;
-    height: inherit;
+    height: auto;
     float: left;
     margin: 27/@unit 0;
+    >a {
+      display: block;
+    }
     img {
       display: block;
       width: 80/@unit;

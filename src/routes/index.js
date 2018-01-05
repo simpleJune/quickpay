@@ -26,7 +26,7 @@ const router = new VueRouter({
 /*window.onBack = function () {
   // 路由跳转配置
   const backConfig = {
-    // 需要退出超级还款的路由
+    // 需要退出快捷收款的路由
     exitRoutes: [
       'home'
     ],

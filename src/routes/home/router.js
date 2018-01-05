@@ -12,7 +12,7 @@ export default [
 		path: '/index',
 		name: 'home',
 		component: homeIndex,
-		meta: { title: '超级还款', keepAlive:true }
+		meta: { title: '快捷收款', keepAlive:true }
 	},
 	// 推广注册
 	{

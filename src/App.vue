@@ -44,7 +44,7 @@ export default {
     ]),
     initWX() {
       let code = ""
-      if(!(code = this.$iBox.helper.getURLParam("code")||"xxxx")) {
+      if(!(code = this.$iBox.helper.getURLParam("code"))) {
         let url = window.location.href
         window.location.href = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${this.appId}&redirect_uri=${encodeURIComponent(url)}&response_type=code&scope=snsapi_base#wechat_redirect`
       } else {
@@ -104,14 +104,14 @@ export default {
     }),
     title () {
       let route = this.route, meta = route.meta
-      return meta.title || "超级还款"
+      return meta.title || "快捷收款"
     }
   },
   watch: {
     title (newPath, oldPath) {
       // 设置钱盒头部标题
       /*this.$iBox.cashbox.callNative('Nav.title', {
-        title: newVal || "超级还款"
+        title: newVal || "快捷收款"
       }, () => {})
       // 设置返回事件监听
       // 这里考虑到回调函数采用时间戳区分

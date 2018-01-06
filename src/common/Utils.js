@@ -348,6 +348,19 @@ const helper = {
 		var r = window.location.href.replace(/^(.*?)\?(.*)$/ig, "$2").match(reg);  //匹配目标参数
 		if (r != null) return decodeURI(r[2]);
 		return ""; //返回参数值
+  },
+
+  // picker数据转换
+  pickerDataConvert(data=[], opts) {
+    var items = [];
+    for(var i=0; i<data.length; i++) {
+      var item = {};
+      item.name = data[i][opts.label];
+      item.value = data[i][opts.value];
+      opts.id && (item.parent = opts.id);
+      items.push(item);
+    }
+    return items;
   }
 
 }

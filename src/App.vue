@@ -43,11 +43,11 @@ export default {
       'getOpenId'
     ]),
     initWX() {
-      let code = ""
-      if(!(code = this.$iBox.helper.getURLParam("code"))) {
-        let url = window.location.href
-        window.location.href = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${this.appId}&redirect_uri=${encodeURIComponent(url)}&response_type=code&scope=snsapi_base#wechat_redirect`
-      } else {
+      let code = "weixin-code-hefeng-test-0000"
+      // if(!(code = this.$iBox.helper.getURLParam("code"))) {
+      //   let url = window.location.href
+      //   window.location.href = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${this.appId}&redirect_uri=${encodeURIComponent(url)}&response_type=code&scope=snsapi_base#wechat_redirect`
+      // } else {
         this.getOpenId({
           code: code
         }).then(res => {
@@ -64,14 +64,15 @@ export default {
               this.$router.push({ name:"profile" })
               break;
             case "1": // 未设置支付密码
-              this.$router.push({ name:"pwd-pay" })
+              this.$router.push({ name:"settingsPwdPay" })
               break;
+            case "2": // 未绑卡
             case "3": // 正常
             default:
               break;
           }
         })
-      }
+      // }
     },
     initApp() {
       // 商户信息

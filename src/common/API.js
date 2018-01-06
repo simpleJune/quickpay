@@ -2,15 +2,24 @@ import request from '~common/Ajax'
 import Vue from 'vue'
 
 // API
-const basePrefix = '/mock-credit-quick-api' // 综合服务
+const basePrefix = '/credit-quick-api' // 综合服务
 
 const API = {
+  // 公共服务
+  'api.province': `${basePrefix}/common/province`, // 获取省份
+  'api.city': `${basePrefix}/common/city`, // 获取市区
+  'api.industry': `${basePrefix}/common/industry`, // 获取行业类型
+  'api.cardbin': `${basePrefix}/common/cardbin`, // 获取卡bin
+
 	// 综合服务
   'api.getopenid': `${basePrefix}/user/getopenid`, // 获取商户信息
   'api.mobile': `${basePrefix}/user/mobile`, // 发送验证码 
   'api.register': `${basePrefix}/user/register`, // 注册
   'api.login': `${basePrefix}/user/login`, // 登录
   'api.logout': `${basePrefix}/user/logout`, // 退出登录
+  'api.realname': `${basePrefix}/user/realname`, // 实名认证
+  'api.setpaypwd': `${basePrefix}/user/setpaypwd`, // 设置支付密码
+
 }
 
 const handleRequest = (url = '') => {

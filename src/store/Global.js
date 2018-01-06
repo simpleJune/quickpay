@@ -47,6 +47,40 @@ const actions = {
       return res
     })
   },
+
+  // 获取省份信息
+  getProvince ({ commit }, params = {}) {
+    return handleRequest('api.province')(params)
+    .then((res={}) => {
+      return res.data
+    })
+  },
+
+  // 获取市区
+  getCity ({ commit }, params = {}) {
+    return handleRequest('api.city')(params)
+    .then((res={}) => {
+      return res.data
+    })
+  },
+
+  // 获取行业类型
+  getIndustry ({ commit }, params = {}) {
+    return handleRequest('api.industry')(params)
+    .then((res={}) => {
+      return res.data
+    })
+  },
+
+  // 获取卡宾
+  getCardbin ({ commit }, params = {}) {
+    return handleRequest('api.cardbin')(params)
+    .then((res={}) => {
+      return res.data
+    })
+  },
+
+
   // 根据token获取信用卡列表
   getCreditCardList ({ commit }, params = {}) {
     return handleRequest('baseUrl.getCreditCardList')(params)
@@ -55,13 +89,7 @@ const actions = {
       return res
     })
   },
-  // 解绑信用卡
-  unBindCreditCard({ commit, dispatch }, params = {}) {
-    return handleRequest('baseUrl.unBindCreditCard')(params)
-    .then(res => {
-      return dispatch('getCreditCardList', params)
-    })
-  }
+
 }
 
 const getters = {

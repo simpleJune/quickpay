@@ -50,6 +50,15 @@ const actions = {
       return res
     })
   },
+
+  // 实名认证
+  realname ({ commit }, params = {}) {
+    return handleRequest('api.realname')(params, {isLoading:true})
+    .then((res={}) => {
+      return res.data
+    })
+  },
+
 }
 
 export default {

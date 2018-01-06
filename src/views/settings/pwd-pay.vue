@@ -1,12 +1,16 @@
 <template>
 	<div class="page-settings__payPwd">
     <div class="page__hd">
-      <p class="page__desc">该6位数字密码将用于手机支付</p>
+      <p class="page__desc" v-if="pageOptions.step1">该6位数字密码将用于手机支付</p>
+      <p class="page__desc" v-else>请重新输入6位数支付密码</p>
     </div>
+
     <!--密码框-->
-    <password id="J_keyboard-pwd" v-model="postData.pwdValue"></password>
+    <password id="J_keyboard-pwd" v-model="postData.payPwd" v-if="pageOptions.step1"></password>
+    <password id="J_keyboard-pwd" v-model="postData.rePayPwd" v-else></password>
+
     <!--修改按钮-->
-    <div class="page-row__btn">
+    <div class="page-row__btn" v-if="pageOptions.step2">
       <x-button type="primary"
         action-type="button"
         :disabled="!pageOptions.isActive"
@@ -14,6 +18,7 @@
         @click.native="onClickSubmit"
       >确认修改</x-button>
     </div>
+
     <!--数字键盘-->
     <keyboard type="number"
       :options="keyboardOptions"
@@ -40,11 +45,13 @@ export default {
   data() {
     return {
       postData: {
-        pwdValue: ""
+        payPwd: "",
+        rePayPwd: ""
       },
       pageOptions: {
-        isActive: false,
-        isLoading: false
+        step1: true,
+        step2: false,
+        isActive: false
       },
       keyboardOptions: {
         show: false, // 是否显示键盘
@@ -53,24 +60,24 @@ export default {
       }
     }
   },
-  computed: {
-    ...mapState({
-
-    }),
-
-  },
   watch: {
     "keyboardOptions.value": function(newVal, oldVal) {
-      this.postData.pwdValue = newVal
+      this.pageOptions.step1 && (this.postData.payPwd = newVal)
+      this.pageOptions.step2 && (this.postData.rePayPwd = newVal)
       // 如果6位密码输入完成自动提交
-      if(/\d{6}/.test(newVal)) {
-        console.log("不能再输入啦~", newVal, oldVal)
+      if(/^\d{6}$/.test(newVal)) {
+        if(this.pageOptions.step1) {
+          this.pageOptions.step1 = false
+          this.pageOptions.step2 = true
+          this.keyboardOptions.value = ""
+        }
       }
+      this.pageOptions.isActive = (this.postData.payPwd == this.postData.rePayPwd)
     }
   },
   methods: {
     ...mapActions([
-      ''
+      'setpaypwd'
     ]),
     onKeyInput(val) {
       this.keyboardOptions.value += val
@@ -78,7 +85,7 @@ export default {
     onKeyDel(val) {
       this.keyboardOptions.value = this.keyboardOptions.value.replace(new RegExp(".$", "g"), "")
     },
-    onKeyDisplay(val, key) {
+    onKeyDisplay(val) {
       this.keyboardOptions.show = val
     },
     doNext(evt) {
@@ -91,6 +98,12 @@ export default {
       }).catch(err => {
         this.pageOptions.status = false
       })*/
+    },
+    onClickSubmit () {
+      this.setpaypwd(this.postData)
+      .then(res => {
+        this.$router.push({name:"home"})
+      })
     }
   },
   mounted() {

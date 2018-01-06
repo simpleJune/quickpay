@@ -1,7 +1,7 @@
 <template>
 	<div class="iBox-bankcard" @click="$emit('click')">
 		<div class="iBox-bankcard__lt">
-			<p class="card-name">{{options.bankName}} <em class="card-suffix">(尾号{{options.showName}})</em></p>
+			<p class="card-name">{{options.creditBankName}} <em class="card-suffix">({{options.creditAccountNo}})</em></p>
 		</div>
 		<i class="card-icon-sm"><img :src="card_icon_sm" alt="icon"></i>
 	</div>
@@ -18,7 +18,7 @@ export default {
 	},
   computed: {
     card_icon_sm() {
-      return require('~assets/images/bank/bankcard_'+ (this.options.bankId||"x") + '.png')
+      return require('~assets/images/bank/bankcard_'+ (this.options.unitedBankNo||"x") + '.png')
     }
   }
 }

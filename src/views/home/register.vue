@@ -62,7 +62,7 @@ export default {
         'sendSmsCode',
         'register'
     ]),
-    sendCodeMsg() {
+    sendCodeMsgsendCodeMsg() {
       let params = {
         codeType: 1,
         loginUser: this.postData.loginUser

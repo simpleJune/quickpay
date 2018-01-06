@@ -40,7 +40,8 @@ export default {
       'getRuntime'
     ]),
     ...mapActions([
-      'getOpenId'
+      'getOpenId',
+      'getMchtInfo'
     ]),
     initWX() {
       let code = "weixin-code-hefeng-test-0000"
@@ -51,6 +52,7 @@ export default {
         this.getOpenId({
           code: code
         }).then(res => {
+          this.getMchtInfo()
           this.appLoadDoneFlag = true
           let merchantStatus = res.merchantStatus + ""
           switch(merchantStatus) {

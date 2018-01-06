@@ -5,12 +5,18 @@ import handleRequest from '~common/API'
 
 const state = {
   openId: "",
+  mchtInfo: {}
 }
 
 const mutations = {
   // openId
   HOME_MUTATION_OPENID (state, payload) {
     state.openId = payload
+  },
+
+  // mchtInfo
+  HOME_MUTATION_MCHTINFO (state, payload) {
+    state.mchtInfo = payload
   }
 }
 
@@ -23,6 +29,16 @@ const actions = {
       commit('HOME_MUTATION_OPENID', data.openId) //||"o5hnM0prrEDkfW5p4WtrlN9Eg7bU"
       commit('GLOBAL_MUTATION_MCHTNO', data.merchantNo)
       commit('GLOBAL_MUTATION_TOKEN', data.accessToken)
+      return data
+    })
+  },
+
+  // 获取商户信息
+  getMchtInfo ({ commit }, params = {}) {
+    return handleRequest('api.querymerchant')(params)
+    .then((res={}) => {
+      let data = res.data
+      commit('HOME_MUTATION_MCHTINFO', data)
       return data
     })
   },

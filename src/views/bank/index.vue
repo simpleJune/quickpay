@@ -1,10 +1,9 @@
 <template>
 	<div :class="{'page-bank__index':true, fixed:card_list.length>=4}">
     <div :class="{'page-bank__group':true, padding:card_list.length>=1}">
-  		<div class="page-bank__row" v-for="(cardItem, cardIdx) in card_list">
+  		<div class="page-bank__row" v-for="(cardItem, cardIdx) in card_list" :key="cardIdx">
   			<bankcard
           :options="cardItem"
-          :key="cardIdx"
           @click="onClickCardItem(cardItem)"
         ></bankcard>
   		</div>
@@ -45,19 +44,15 @@ export default {
           label: '解除绑定',
           value: 'unbind'
         }
-      ],
-      selectedCard: {} //选中的卡
+      ]
     }
   },
   computed: {
     ...mapState({
-        creditCardList: state => state.global.creditCardList,
-        mchtInfo: state => state.global.mchtInfo
+        creditList: state => state.home.mchtInfo.creditList||[]
     }),
     card_list() {
-      return this.creditCardList.filter((cardItem) => {
-        return cardItem.status != "1"
-      })
+      return this.creditList;
     }
   },
   methods: {
@@ -67,11 +62,7 @@ export default {
     onClickCardItem(cardItem) {
 
     },
-    ...mapActions(['unBindCreditCard', 'getCreditCardList'])
-  },
-  mounted() {
-    this.getCreditCardList()
-    .catch(err => {})
+    ...mapActions(['getCreditCardList'])
   }
 }
 </script>

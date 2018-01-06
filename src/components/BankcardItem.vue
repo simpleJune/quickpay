@@ -4,7 +4,7 @@
 	      <p class="icon-x"
 	      	:style="{backgroundImage: 'url(' + card_bg_icon + ')'}"
       	>
-	      	{{options.bankName+"(尾号"+options.showName+")"}}
+	      	{{options.bankName+"("+options.showName+")"}}
 	      </p>
 	  </div>
 	</label>
@@ -12,8 +12,8 @@
 
 <script>
 const CARDS_LIST = [
-	// RED
-	"1", //中国银行
+  // RED
+  "1", //中国银行
   "2", //工商银行
   "6", //中信银行
   "8", //华夏银行
@@ -51,8 +51,8 @@ export default {
 	},
 	computed: {
 		card_bg_icon() {
-			let bankIcon = CARDS_LIST.includes(this.options.bankId+"")? this.options.bankId:"x"
-			return require('~assets/images/bank_bg/bankcard_icon_'+ bankIcon + '.png')
+			// let bankIcon = CARDS_LIST.includes(this.options.unitedBankNo+"")? this.options.unitedBankNo:"x"
+			return require('~assets/images/bank/bankcard_'+ this.options.unitedBankNo + '.png')
 		}
 	},
 	methods: {

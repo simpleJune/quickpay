@@ -195,7 +195,7 @@ export default {
       this.postData.industryType = value;
       this.postData.industryName = label;
     },
-    onFocusoutCardNo () {
+    onFocusoutCardNoonFocusoutCardNo () {
       this.getCardbin({
         bankCardNo: this.postData.settleAccountNo
       }).then(res => {

@@ -19,6 +19,10 @@ const API = {
   'api.logout': `${basePrefix}/user/logout`, // 退出登录
   'api.realname': `${basePrefix}/user/realname`, // 实名认证
   'api.setpaypwd': `${basePrefix}/user/setpaypwd`, // 设置支付密码
+  'api.addcreditcard': `${basePrefix}/user/addcreditcard`, // 添加信用卡
+
+  // 商户服务
+  'api.querymerchant': `${basePrefix}/merchant/querymerchant`, // 获取商户信息
 
 }
 

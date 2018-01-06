@@ -1,45 +1,103 @@
 <template>
 	<div class="page-settings">
-    <group title="基本信息">
-      <cell title="商户名称" value="中商平价超市"></cell>
-      <cell title="姓名" value="何锋"></cell>
-      <cell title="身份证号码" value="422302************3910"></cell>
-      <cell title="手机号" value="136****5555" :is-link="true"></cell>
+    <!--持卡人信息-->
+    <group>
+      <cell title="持卡人" :value="postData.username"></cell>
+      <x-input title="卡号" v-model="postData.creditAccountNo" @on-blur="onFocusoutCardNo" placeholder="信用卡卡号"></x-input>
+      <cell title="银行" :value="postData.bankName"></cell>
     </group>
+
+    <!--验证信息-->
+    <group>
+      <x-input type="tel" title="预留手机号" v-model="postData.creditMobile" placeholder="银行预留手机号"></x-input>
+      <v-code ref="VCode" :verifyCode.sync="postData.verifyCode" @sendCodeMsg="sendCodeMsg()"></v-code>
+    </group>
+
+    <!--提交银行卡信息-->
+    <div class="page-row__btn">
+      <x-button type="primary"
+        action-type="button"
+        :disabled="!pageOptions.isActive"
+        :show-loading="pageOptions.isLoading"
+        @click.native="onClickSubmit"
+      >提交</x-button>
+    </div>
   </div>
 </template>
 
 <script>
-import { Group, Cell } from 'vux'
+import { Group, Cell, XInput, XButton } from 'vux'
 import { mapState, mapActions } from 'vuex'
+import VCode from '~components/VCode.vue'
 
 export default {
   name: 'page-settings',
   components: {
     Group,
-    Cell
+    Cell,
+    XInput,
+    XButton,
+    VCode
   },
   data() {
     return {
-      postData: {},
+      postData: {
+        username: "",
+        creditAccountNo: "",
+        bankCode: "",
+        bankName: "",
+        cardName: "",
+        creditMobile: "",
+        verifyCode: "",
+      },
       pageOptions: {
-        isActive: false,
+        isActive: true,
         isLoading: false
       },
     }
   },
   computed: {
     ...mapState({
-        creditCardList: state => state.global.creditCardList,
-        mchtInfo: state => state.global.mchtInfo
-    }),
-
+        mchtInfo: state => state.home.mchtInfo
+    })
+  },
+  created () {
+    setTimeout(() => {
+      this.postData.username = this.mchtInfo.realName
+    }, 800)
   },
   methods: {
-    ...mapActions(['unBindCreditCard', 'getCreditCardList'])
-  },
-  mounted() {
-
+    ...mapActions([
+      'sendSmsCode',
+      'getCardbin',
+      'addcreditcard'
+    ]),
+    sendCodeMsg() {
+      let params = {
+        codeType: 5,
+        loginUser: this.postData.creditMobile
+      }
+      this.$refs.VCode.getCode()
+      this.sendSmsCode(params)
+      .catch(err => {
+         this.$refs.VCode.codeReset()
+      })
+    },
+    onFocusoutCardNo () {
+      this.getCardbin({
+        bankCardNo: this.postData.creditAccountNo
+      }).then(res => {
+        this.postData.cardName = res.cardName
+        this.postData.bankName = res.bankName
+        this.postData.bankCode = res.bankCode
+      })
+    },
+    onClickSubmit () {
+      this.addcreditcard(this.postData)
+      .then(res => {
+        console.log("addcreditcard ok")
+      })
+    }
   }
 }
 </script>

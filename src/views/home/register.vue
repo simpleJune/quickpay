@@ -62,16 +62,13 @@ export default {
         'sendSmsCode',
         'register'
     ]),
-    sendCodeMsgsendCodeMsg() {
+    sendCodeMsg() {
       let params = {
         codeType: 1,
         loginUser: this.postData.loginUser
       }
       this.$refs.VCode.getCode()
       this.sendSmsCode(params)
-      .then(() => {
-        //TODO
-      })
       .catch(err => {
          this.$refs.VCode.codeReset()
       })
@@ -89,11 +86,4 @@ export default {
 
 <style lang="less">
 @import '~assets/less/views/public';
-
-.page-register {
-  .logo {
-    padding: 15/@unit 0;
-    text-align: center;
-  }
-}
 </style>

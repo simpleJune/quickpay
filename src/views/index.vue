@@ -64,14 +64,6 @@
 import { Grid, GridItem, Swiper, SwiperItem } from 'vux'
 import { mapState, mapActions } from 'vuex'
 
-const CARD_STATUS_MAP = {
-  "0": "定制计划",
-  "1": "已解绑",
-  "2": "定制计划",
-  "3": "定制计划",
-  "4": "查看计划"
-}
-
 export default {
   name: "page-home",
   components: {
@@ -87,7 +79,7 @@ export default {
   },
   computed: {
     ...mapState({
-        // creditCardList: state => state.home.creditCardList
+        headerParams: state => state.global.headerParams
     }),
     ads_list() {
       return [
@@ -99,21 +91,16 @@ export default {
       return 120/37.5 * this.baseFontSize + "px"
     }
   },
-  created () {
-    // 获取广告数据
-    /*this.getAdList({
-      queryRules: 'credit_card_home_page',
-      pageSize: 20
-    }).then((res=[]) => {
-      this.ads_list = res
-    })*/
-    
+  mounted () {
+    // 获取商户信息
+    this.headerParams.accessToken &&
+    this.headerParams.merchantNo &&
+    this.$store.dispatch("getMchtInfo")
   },
   methods: {
     ...mapActions([
       ''
-    ]),
-
+    ])
   }
 }
 </script>

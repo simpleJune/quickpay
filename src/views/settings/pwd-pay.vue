@@ -16,7 +16,7 @@
         :disabled="!pageOptions.isActive"
         :show-loading="pageOptions.isLoading"
         @click.native="onClickSubmit"
-      >确认修改</x-button>
+      >完成</x-button>
     </div>
 
     <!--数字键盘-->
@@ -66,11 +66,13 @@ export default {
       this.pageOptions.step2 && (this.postData.rePayPwd = newVal)
       // 如果6位密码输入完成自动提交
       if(/^\d{6}$/.test(newVal)) {
-        if(this.pageOptions.step1) {
-          this.pageOptions.step1 = false
-          this.pageOptions.step2 = true
-          this.keyboardOptions.value = ""
-        }
+        setTimeout(() => {
+          if(this.pageOptions.step1) {
+            this.pageOptions.step1 = false
+            this.pageOptions.step2 = true
+            this.keyboardOptions.value = ""
+          }
+        }, 200)
       }
       this.pageOptions.isActive = (this.postData.payPwd == this.postData.rePayPwd)
     }

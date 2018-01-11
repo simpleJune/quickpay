@@ -19,6 +19,7 @@ const state = {
   headerParams: {
     accessToken: '', // 用户token
     merchantNo: '', // 商户编号
+    loginMobile: '', // 登录手机号
     sysSource: 'H5', // 来源
     channel: '微信', // 渠道
     partnerCode: '10050', // 机构编号
@@ -36,6 +37,10 @@ const mutations = {
   // merchantNo
   GLOBAL_MUTATION_MCHTNO (state, payload) {
     state.headerParams.merchantNo = payload
+  },
+  // loginMobile
+  GLOBAL_MUTATION_MOBILE (state, payload) {
+    state.headerParams.loginMobile = payload
   },
 }
 

@@ -17,7 +17,7 @@ const routes = [
   ...SettingsRouter
 ]
 
-const router = new VueRouter({
+const router = window.router = new VueRouter({
   saveScrollPosition: true, //  保存页面切换的位置滚动
   routes: routes
 })

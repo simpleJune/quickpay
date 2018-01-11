@@ -4,7 +4,13 @@
 import handleRequest from '~common/API'
 
 const state = {
+  // 关联微信商户
   openId: "",
+
+  // 错误码
+  errorCode: "",
+
+  // 商户信息
   mchtInfo: {}
 }
 
@@ -12,6 +18,11 @@ const mutations = {
   // openId
   HOME_MUTATION_OPENID (state, payload) {
     state.openId = payload
+  },
+
+  // errorCode
+  HOME_MUTATION_ERROR_CODE (state, payload) {
+    state.errorCode = payload
   },
 
   // mchtInfo
@@ -29,6 +40,7 @@ const actions = {
       commit('HOME_MUTATION_OPENID', data.openId) //||"o5hnM0prrEDkfW5p4WtrlN9Eg7bU"
       commit('GLOBAL_MUTATION_MCHTNO', data.merchantNo)
       commit('GLOBAL_MUTATION_TOKEN', data.accessToken)
+      commit('GLOBAL_MUTATION_MOBILE', data.loginMobile)
       return data
     })
   },
@@ -47,7 +59,11 @@ const actions = {
   register ({ commit }, params = {}) {
     return handleRequest('api.register')(params, {isLoading:true})
     .then((res={}) => {
-      return res
+      let data = res.data
+      commit('GLOBAL_MUTATION_MCHTNO', data.merchantNo)
+      commit('GLOBAL_MUTATION_TOKEN', data.accessToken)
+      commit('GLOBAL_MUTATION_MOBILE', params.loginUser)
+      return data
     })
   },
 
@@ -55,7 +71,11 @@ const actions = {
   login ({ commit }, params = {}) {
     return handleRequest('api.login')(params, {isLoading:true})
     .then((res={}) => {
-      return res
+      let data = res.data
+      commit('GLOBAL_MUTATION_MCHTNO', data.merchantNo)
+      commit('GLOBAL_MUTATION_TOKEN', data.accessToken)
+      commit('GLOBAL_MUTATION_MOBILE', data.loginMobile)
+      return data
     })
   },
 

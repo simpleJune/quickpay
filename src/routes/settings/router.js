@@ -20,7 +20,7 @@ export default [
       { path: 'mobile', name:'settingsMobile', component: settingsMobile, meta: { title: '修改手机号' } },
       { path: 'pwd', name:'settingsPwd', component: settingsPwd, meta: { title: '重置登录密码' } },
       { path: 'pwd-check', name:'settingsPwdCheck', component: settingsPwdCheck, meta: { title: '信息验证' } },
-      { path: 'pwd-pay', name:'settingsPwdPay', component: settingsPwdPay, meta: { title: '重置支付密码' } }
+      { path: 'pwd-pay', name:'settingsPwdPay', component: settingsPwdPay, meta: { title: '设置支付密码' } }
     ]
   }
 ]

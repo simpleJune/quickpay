@@ -65,11 +65,6 @@ export default {
     height: 30/@unit;
     line-height: 30/@unit;
     color: @font-color-black;
-    &.card-name {
-      em {
-        // font-size: @font-size-15;
-      }
-    }
   }
 
 }

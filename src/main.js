@@ -4,7 +4,7 @@ import Vue from 'vue'
 import { sync } from 'vuex-router-sync' // 同步路由到store
 // import NProgress from 'nprogress'; // 进度条
 // import 'nprogress/nprogress.css'; // 进度条样式
-import VueScroller from 'vue-scroller' // 无限加载
+// import VueScroller from 'vue-scroller' // 无限加载
 
 // vux 全局组件
 import { LoadingPlugin, AlertPlugin, ToastPlugin, ConfirmPlugin } from 'vux'
@@ -12,7 +12,7 @@ Vue.use(LoadingPlugin)
 Vue.use(AlertPlugin)
 Vue.use(ToastPlugin)
 Vue.use(ConfirmPlugin)
-Vue.use(VueScroller)
+// Vue.use(VueScroller)
 
 // 自定义插件
 import iBoxPlugin from '~plugins/iBox'

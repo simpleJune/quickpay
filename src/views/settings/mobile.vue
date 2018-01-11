@@ -55,7 +55,10 @@ export default {
 
   },
   methods: {
-    ...mapActions(['unBindCreditCard', 'getCreditCardList'])
+    ...mapActions(['unBindCreditCard', 'getCreditCardList']),
+    sendCodeMsg () {
+      console.log("sendCodeMsg")
+    }
   },
   mounted() {
 

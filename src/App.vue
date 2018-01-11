@@ -32,7 +32,7 @@ export default {
     if (runtime == "weixin") {
       this.initWX()
     } else {
-      this.initWX()
+      this.init()
     }
   },
   methods: {
@@ -40,41 +40,36 @@ export default {
       'getRuntime'
     ]),
     ...mapActions([
-      'getOpenId',
-      'getMchtInfo'
+      'getOpenId'
     ]),
+    init() {
+      let code = "weixin-code-hefeng-test-0000"
+      this.getOpenId({
+        code: code
+      }).then(res => {
+        // 如果商户状态未注册不能继续往下走
+        if(res.merchantStatus !== undefined) {
+          this.$store.commit("HOME_MUTATION_MCHTINFO", res)
+        }
+        this.appLoadDoneFlag = true
+      })
+    },
     initWX() {
       let code = "weixin-code-hefeng-test-0000"
-      // if(!(code = this.$iBox.helper.getURLParam("code"))) {
-      //   let url = window.location.href
-      //   window.location.href = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${this.appId}&redirect_uri=${encodeURIComponent(url)}&response_type=code&scope=snsapi_base#wechat_redirect`
-      // } else {
+      if(!(code = this.$iBox.helper.getURLParam("code"))) {
+        let url = window.location.href
+        window.location.href = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${this.appId}&redirect_uri=${encodeURIComponent(url)}&response_type=code&scope=snsapi_base#wechat_redirect`
+      } else {
         this.getOpenId({
           code: code
         }).then(res => {
-          this.getMchtInfo()
-          this.appLoadDoneFlag = true
-          let merchantStatus = res.merchantStatus + ""
-          switch(merchantStatus) {
-            case "-1": // 未注册 merchantNo=504798616515248640&partnerCode=10050
-              let merchantNo = this.$iBox.helper.getURLParam("merchantNo")
-              merchantNo? //扫码注册|直接关注微信号登录
-                this.$router.push({ name:'register', params:{ refereeMerchantNO:merchantNo } }):
-                this.$router.push({name:"login"})
-              break;
-            case "0": // 未实名
-              this.$router.push({ name:"profile" })
-              break;
-            case "1": // 未设置支付密码
-              this.$router.push({ name:"settingsPwdPay" })
-              break;
-            case "2": // 未绑卡
-            case "3": // 正常
-            default:
-              break;
+          // 如果商户状态未注册不能继续往下走
+          if(res.merchantStatus !== undefined) {
+            this.$store.commit("HOME_MUTATION_MCHTINFO", res)
           }
+          this.appLoadDoneFlag = true
         })
-      // }
+      }
     },
     initApp() {
       // 商户信息
@@ -103,7 +98,8 @@ export default {
         routeName: state => state.route.name,
         routePath: state => state.route.path,
         backToCashboxRoutes: state => state.global.headerOptions.backToCashboxRoutes,
-        backToHomeRoutes: state => state.global.headerOptions.backToHomeRoutes
+        backToHomeRoutes: state => state.global.headerOptions.backToHomeRoutes,
+        merchantStatus: state => state.home.mchtInfo.merchantStatus
     }),
     title () {
       let route = this.route, meta = route.meta
@@ -111,6 +107,27 @@ export default {
     }
   },
   watch: {
+    merchantStatus (newVal, oldVal) {
+      let merchantStatus = newVal + ""
+      switch(merchantStatus) {
+        case "-1": // 未注册 merchantNo=504798616515248640&partnerCode=10050
+          let merchantNo = this.$iBox.helper.getURLParam("merchantNo")
+          merchantNo? //扫码注册|直接关注微信号登录
+            this.$router.push({ name:'register', params:{ refereeMerchantNO:merchantNo } }):
+            this.$router.push({name:"login"})
+          break;
+        case "0": // 未实名
+          this.$router.push({ name:"profile" })
+          break;
+        case "1": // 未设置支付密码
+          this.$router.push({ name:"settingsPwdPay" })
+          break;
+        case "2": // 未绑卡
+        case "3": // 正常
+        default:
+          break;
+      }
+    },
     title (newPath, oldPath) {
       // 设置钱盒头部标题
       /*this.$iBox.cashbox.callNative('Nav.title', {
@@ -138,10 +155,6 @@ export default {
       }, 10)*/
 
 
-      window.onback = function() {
-        console.log("title>>>>", this.title)
-      }
-
       document.title = this.title
       /*if(this.backToCashboxRoutes.includes(this.routeName)) {
         try {
@@ -152,6 +165,9 @@ export default {
       } else {
         this.$router ? this.$router.back() : window.history.back()
       }*/
+    },
+    routePath (newVal, oldVal) {
+      console.log("routePath", newVal, oldVal)
     }
   }
 }

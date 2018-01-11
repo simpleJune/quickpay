@@ -2,7 +2,7 @@ import request from '~common/Ajax'
 import Vue from 'vue'
 
 // API
-const basePrefix = '/credit-quick-api' // 综合服务
+const basePrefix = '/mock-credit-quick-api' // 综合服务
 
 const API = {
   // 公共服务

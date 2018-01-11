@@ -32,7 +32,7 @@
     </group>
 
     <group>
-      <x-input type="number" title="结算卡号" v-model="postData.settleAccountNo" @on-blur="onFocusoutCardNo" placeholder="您本人结算银行卡号"></x-input>
+      <x-input type="number" title="结算卡号" v-model="postData.settleAccountNo" @focusout.native="onFocusoutCardNo" placeholder="您本人结算银行卡号"></x-input>
       <x-input type="tel" title="手机号" v-model="postData.settleMobile" placeholder="结算银行预留手机号"></x-input>
       <cell is-link title="行业" :value="postData.industryName" @click.native="onClickSelectMcc"></cell>
     </group>
@@ -44,7 +44,6 @@
         :show-loading="pageOptions.isLoading"
         @click.native="onClickSubmit"
       >提交</x-button>
-      <!-- <button type="button" @click="onClickLogout">退出登录</button> -->
     </div>
 
     <!--选择MCC-->
@@ -195,7 +194,7 @@ export default {
       this.postData.industryType = value;
       this.postData.industryName = label;
     },
-    onFocusoutCardNoonFocusoutCardNo () {
+    onFocusoutCardNo () {
       this.getCardbin({
         bankCardNo: this.postData.settleAccountNo
       }).then(res => {

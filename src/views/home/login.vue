@@ -13,7 +13,7 @@
       >提交</x-button>
     </div>
     <div class="page-row__info forgetPwd">
-      <router-link to="/">忘记密码</router-link>
+      <router-link to="/settings/pwd">忘记密码</router-link>
     </div>
   </div>
 </template>
@@ -39,12 +39,6 @@ export default {
       }
     }
   },
-  computed: {
-    ...mapState({
-    }),
-  },
-  mounted () {
-  },
   methods: {
     // actions的方法
     ...mapActions([
@@ -63,12 +57,6 @@ export default {
 <style lang="less">
 @import '~assets/less/views/public';
 
-.page-login {
-  .logo {
-    padding: 15/@unit 0;
-    text-align: center;
-  }
-}
 .page-row__info {
   &.forgetPwd {
     text-align: right;

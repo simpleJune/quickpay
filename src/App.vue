@@ -108,6 +108,7 @@ export default {
   },
   watch: {
     merchantStatus (newVal, oldVal) {
+      if(newVal === "") return;
       let merchantStatus = newVal + ""
       switch(merchantStatus) {
         case "-1": // 未注册 merchantNo=504798616515248640&partnerCode=10050
@@ -127,6 +128,9 @@ export default {
         default:
           break;
       }
+      // 这里置空很关键
+      // 直接关系到从错误页跳回到首页时是否能再次跳转
+      this.$store.commit("HOME_MUTATION_MCHTINFO_STATUS", "") 
     },
     title (newPath, oldPath) {
       // 设置钱盒头部标题

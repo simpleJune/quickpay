@@ -10,7 +10,7 @@
       <i data-num="7" class="weui-grid">7</i>
       <i data-num="8" class="weui-grid">8</i>
       <i data-num="9" class="weui-grid">9</i>
-      <i data-num="down" class="weui-grid"></i>
+      <i data-num="" class="weui-grid"></i>
       <i data-num="0" class="weui-grid">0</i>
       <i data-num="del" class="weui-grid"></i>
     </grid>
@@ -32,8 +32,10 @@ export default {
     options: {
       type: Object,
       default: {
-        show: false,
-        value: ""
+        show: false, // 显示键盘
+        toggle: true, // 键盘伸缩
+        value: "", // 输入值
+        count: 6 // 有效位数
       },
       required: true
     }
@@ -44,13 +46,12 @@ export default {
       if(target.nodeName.toLowerCase() === "i") {
         let value = this.options.value
         let num = target.getAttribute("data-num")
-        if(num === "down") {
-          this.$emit("on-key-display", false, null)
-        } else if(num === "del") {
+        if(num === "del") {
           this.$emit('on-key-del', num)
         } else {
+          let numPreCountReg = new RegExp(`^\\d{${this.options.count}}$`)
           if(
-            /^\d{6}$/.test(value) || // 限制6位数字
+            numPreCountReg.test(value) || // 限制6位数字
             /\.\d{2}$/.test(value) || // 限制2位小数
             (num == "." && /\./.test(value)) // 只能输入一个"."
           ) {
@@ -61,7 +62,7 @@ export default {
       }
     },
     onTouchKeyboard(evt) {
-      console.log("=============Optimization point: components/keyboard.vue-1")
+      // console.log("=============Optimization point: components/keyboard.vue-1")
       // this.$tabbar = document.querySelector('.weui-tabbar')
 
       // 判断是否点击了键盘自身
@@ -80,10 +81,10 @@ export default {
     }
   },
   created() {
-    document.addEventListener("touchstart", this.onTouchKeyboard)
+    this.options.toggle && document.addEventListener("touchstart", this.onTouchKeyboard)
   },
   destroyed() {
-    document.removeEventListener("touchstart", this.onTouchKeyboard)
+    this.options.toggle && document.removeEventListener("touchstart", this.onTouchKeyboard)
   }
 }
 </script>
@@ -127,7 +128,6 @@ export default {
     height: 4*@keyboard-font-size;
     line-height: 4*@keyboard-font-size;
     font-size: 2*@keyboard-font-size;
-    // background-color: @keyboard-bgColor-white;
     font-style: normal;
     text-align: center;
 
@@ -140,13 +140,7 @@ export default {
       background-color: @keyboard-bgColor-active;
     }
   }
-  i[data-num="down"] {
-    background: @bgColor data-uri("~assets/less/icon/keypad@2x.png") no-repeat center center;
-    background-size: 22% auto;
-    &:active {
-      background-color: @keyboard-bgColor-active;
-    }
-  }i[data-num="del"] {
+  i[data-num="del"] {
     background: @bgColor data-uri("~assets/less/icon/del@2x.png") no-repeat center center;
     background-size: 22% auto;
     &:active {

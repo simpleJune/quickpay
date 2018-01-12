@@ -28,6 +28,11 @@ const mutations = {
   // mchtInfo
   HOME_MUTATION_MCHTINFO (state, payload) {
     state.mchtInfo = payload
+  },
+
+  // merchantStatus
+  HOME_MUTATION_MCHTINFO_STATUS (state, payload) {
+    state.mchtInfo.merchantStatus = payload
   }
 }
 
@@ -47,7 +52,7 @@ const actions = {
 
   // 获取商户信息
   getMchtInfo ({ commit }, params = {}) {
-    return handleRequest('api.querymerchant')(params)
+    return handleRequest('api.querymerchant')(params, {isTip:false})
     .then((res={}) => {
       let data = res.data
       commit('HOME_MUTATION_MCHTINFO', data)

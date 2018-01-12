@@ -1,5 +1,5 @@
 <template>
-  <div class="page__404">
+  <div class="page__shared">
     <p><img src="http://120.79.68.8:8080/credit-quick-api/509495858115379200.png"></p>
   </div>
 </template>
@@ -16,7 +16,7 @@ export default {
 
 </script>
 
-<style lang="less" scoped>
+<style lang="less">
 @import "~assets/less/base/variable.less";
 
 .page__shared {

@@ -206,7 +206,7 @@ export default {
     onClickSubmit () {
       this.realname(this.postData)
       .then(res => {
-        this.$router.push({name:"home"})
+        this.$router ? this.$router.back() : window.history.back()
       })
     }
   }

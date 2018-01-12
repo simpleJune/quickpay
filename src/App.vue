@@ -121,7 +121,7 @@ export default {
           this.$router.push({ name:"profile" })
           break;
         case "1": // 未设置支付密码
-          this.$router.push({ name:"settingsPwdPay" })
+          this.$router.push({ name:"pwd" })
           break;
         case "2": // 未绑卡
         case "3": // 正常

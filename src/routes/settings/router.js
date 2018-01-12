@@ -4,8 +4,7 @@ const settingsIndex = resolve => require(['~views/settings/index.vue'], resolve)
 const settingsCard = resolve => require(['~views/settings/card.vue'], resolve) // 修改结算卡
 const settingsMobile = resolve => require(['~views/settings/mobile.vue'], resolve) // 修改手机号
 const settingsPwd = resolve => require(['~views/settings/pwd.vue'], resolve) // 重置密码
-const settingsPwdCheck = resolve => require(['~views/settings/pwd-check.vue'], resolve) // 密码修改前验证
-const settingsPwdPay = resolve => require(['~views/settings/pwd-pay.vue'], resolve) // 重置支付密码
+const settingsPwdCheck = resolve => require(['~views/settings/pwd-check.vue'], resolve) // 重置支付密码
 
 // 制定信用卡还款计划页面路由配置
 export default [
@@ -20,7 +19,6 @@ export default [
       { path: 'mobile', name:'settingsMobile', component: settingsMobile, meta: { title: '修改手机号' } },
       { path: 'pwd', name:'settingsPwd', component: settingsPwd, meta: { title: '重置登录密码' } },
       { path: 'pwd-check', name:'settingsPwdCheck', component: settingsPwdCheck, meta: { title: '信息验证' } },
-      { path: 'pwd-pay', name:'settingsPwdPay', component: settingsPwdPay, meta: { title: '设置支付密码' } }
     ]
   }
 ]

@@ -47,7 +47,7 @@ export default {
     onClickSubmit() {
       this.login(this.postData)
       .then((res={}) => {
-        this.$router.push({name:"home"})
+        this.$router ? this.$router.back() : window.history.back()
       })
     }
   }

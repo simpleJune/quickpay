@@ -3,6 +3,7 @@ const homeIndex = resolve => require(['~views/index.vue'], resolve) // index
 const homeRegister = resolve => require(['~views/home/register.vue'], resolve) // 注册
 const homeLogin = resolve => require(['~views/home/login.vue'], resolve) // 登录
 const homeProfile = resolve => require(['~views/home/profile.vue'], resolve) // 商户认证
+const homePwd = resolve => require(['~views/home/pwd.vue'], resolve) // 支付密码
 
 // Home Router
 export default [
@@ -34,5 +35,12 @@ export default [
 		name: 'profile',
 		component: homeProfile,
 		meta: { title: '实名认证' }
+	},
+	// 设置支付密码
+	{
+		path: '/pwd',
+		name: 'pwd',
+		component: homePwd,
+		meta: { title: '设置支付密码' }
 	}
 ]

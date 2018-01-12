@@ -77,7 +77,7 @@ export default {
       this.postData.openId = this.openId
       this.register(this.postData)
       .then((res={}) => {
-        this.$router.push({name:"home"})
+        this.$router ? this.$router.back() : window.history.back()
       })
     }
   }

@@ -1,52 +1,106 @@
 <template>
-	<div class="page-settings">
-    <group title="基本信息">
-      <cell title="商户名称" value="中商平价超市"></cell>
-      <cell title="姓名" value="何锋"></cell>
-      <cell title="身份证号码" value="422302************3910"></cell>
-      <cell title="手机号" value="136****5555" :is-link="true"></cell>
-    </group>
-    <group title="银行卡">
-      <cell title="结算卡号" value="621226********236"></cell>
-      <cell title="信用卡管理" value="" :is-link="true"></cell>
-    </group>
-    <group title="用户设置">
-      <cell title="修改登录密码" value="" :is-link="true"></cell>
-    </group>
+	<div class="page-settings__payPwd">
+    <div class="page__hd">
+      <p class="page__desc" v-if="pageOptions.step1">该6位数字密码将用于手机支付</p>
+      <p class="page__desc" v-else>请重新输入6位数支付密码</p>
+    </div>
+
+    <!--密码框-->
+    <password id="J_keyboard-pwd" v-model="postData.payPwd" v-if="pageOptions.step1"></password>
+    <password id="J_keyboard-pwd" v-model="postData.rePayPwd" v-else></password>
+
+    <!--修改按钮-->
+    <div class="page-row__btn" v-if="pageOptions.step2">
+      <x-button type="primary"
+        action-type="button"
+        :disabled="!pageOptions.isActive"
+        :show-loading="pageOptions.isLoading"
+        @click.native="onClickSubmit"
+      >完成</x-button>
+    </div>
+
+    <!--数字键盘-->
+    <keyboard type="number"
+      :options="keyboardOptions"
+      @on-key-input="onKeyInput"
+      @on-key-del="onKeyDel"
+      @on-key-display="onKeyDisplay"
+    ></keyboard>
   </div>
 </template>
 
 <script>
-import { Group, Cell } from 'vux'
+import { XButton } from 'vux'
 import { mapState, mapActions } from 'vuex'
+import Password from '~components/Password'
+import Keyboard from '~components/Keyboard'
 
 export default {
-  name: 'page-settings',
+  name: 'page-settings-payPwd',
   components: {
-    Group,
-    Cell
+    XButton,
+    Password,
+    Keyboard
   },
   data() {
     return {
-      postData: {},
-      pageOptions: {
-        isActive: false,
-        isLoading: false
+      postData: {
+        payPwd: "",
+        rePayPwd: ""
       },
+      pageOptions: {
+        step1: true,
+        step2: false,
+        isActive: false
+      },
+      keyboardOptions: {
+        show: false, // 是否显示键盘
+        value: "", // 输入值
+        toggle: false // 是否允许伸缩
+      }
     }
   },
-  computed: {
-    ...mapState({
-        creditCardList: state => state.global.creditCardList,
-        mchtInfo: state => state.global.mchtInfo
-    }),
-
+  watch: {
+    "keyboardOptions.value": function(newVal, oldVal) {
+      this.pageOptions.step1 && (this.postData.payPwd = newVal)
+      this.pageOptions.step2 && (this.postData.rePayPwd = newVal)
+      // 如果6位密码输入完成自动提交
+      if(/^\d{6}$/.test(newVal)) {
+        setTimeout(() => {
+          if(this.pageOptions.step1) {
+            this.pageOptions.step1 = false
+            this.pageOptions.step2 = true
+            this.keyboardOptions.value = ""
+          }
+        }, 200)
+      }
+      this.pageOptions.isActive = (this.postData.payPwd == this.postData.rePayPwd)
+    }
   },
   methods: {
-    ...mapActions(['unBindCreditCard', 'getCreditCardList'])
+    ...mapActions([
+      'setpaypwd'
+    ]),
+    onKeyInput(val) {
+      this.keyboardOptions.value += val
+    },
+    onKeyDel(val) {
+      this.keyboardOptions.value = this.keyboardOptions.value.replace(new RegExp(".$", "g"), "")
+    },
+    onKeyDisplay(val) {
+      this.keyboardOptions.show = val
+    },
+    onClickSubmit () {
+      this.setpaypwd(this.postData)
+      .then(res => {
+        this.$router ? this.$router.back() : window.history.back()
+      })
+    }
   },
   mounted() {
-
+    setTimeout(() => {
+      this.keyboardOptions.show = true
+    })
   }
 }
 </script>
@@ -54,11 +108,13 @@ export default {
 <style lang="less">
 @import "~assets/less/views/public";
 
-.page-settings {
-  .weui-cell__ft {
-    color: @font-color-black;
-    font-size: @font-size-14;
+.page-settings__payPwd {
+  .page__hd {
+    padding: 16/@unit;
+    text-align: center;
+  }
+  .page__desc {
+    font-size: @font-size-16;
   }
 }
-
 </style>

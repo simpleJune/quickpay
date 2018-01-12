@@ -17,7 +17,7 @@ export default {
 
 </script>
 
-<style lang="less" scoped>
+<style lang="less">
 @import "~assets/less/base/variable.less";
 
 .page__404 {

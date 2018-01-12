@@ -2,7 +2,7 @@ import Vue from 'vue'   //引入vue
 import VueRouter from 'vue-router'   //引入vue-router
 
 import HomeRouter from '~routes/home/router'
-import PlanRouter from '~routes/plan/router'
+import PayRouter from '~routes/pay/router'
 import BillRouter from '~routes/bill/router'
 import BankRouter from '~routes/bank/router'
 import PublicRouter from '~routes/public/router'
@@ -10,7 +10,7 @@ import SettingsRouter from '~routes/settings/router'
 
 const routes = [
   ...HomeRouter,
-  ...PlanRouter,
+  ...PayRouter,
   ...BillRouter,
   ...BankRouter,
   ...PublicRouter,
@@ -31,7 +31,7 @@ const router = window.router = new VueRouter({
       'home'
     ],
     backHomeRoutes: [
-      "planAddStep1",
+      "payAddStep1",
       "public404",
       "publicResult",
     ]

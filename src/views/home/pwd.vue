@@ -56,6 +56,7 @@ export default {
       keyboardOptions: {
         show: false, // 是否显示键盘
         value: "", // 输入值
+        count: 6,
         toggle: false // 是否允许伸缩
       }
     }

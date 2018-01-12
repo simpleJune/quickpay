@@ -2,7 +2,7 @@
   <div class="page-home">
     <ul class="home-quick">
       <li class="money">
-        <router-link to="/bank/add">
+        <router-link to="/pay">
           <img src="~assets/less/icon/money.png">
         </router-link>
         <p>收款</p>

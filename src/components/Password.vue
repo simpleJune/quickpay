@@ -8,7 +8,7 @@
       	v-for="(pwdKey, pwdIdx) in pwdLen"
         :key="pwdKey"
       >
-      	<i class="iBox-icon__circle" v-if="value[pwdIdx]!==undefined"></i>
+      	<i class="icon-circle" v-if="value[pwdIdx]!==undefined"></i>
       </flexbox-item>
     </flexbox>
   </div>

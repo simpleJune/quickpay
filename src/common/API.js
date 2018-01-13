@@ -2,7 +2,7 @@ import request from '~common/Ajax'
 import Vue from 'vue'
 
 // API
-const basePrefix = '/mock-credit-quick-api' // 综合服务
+const basePrefix = '/credit-quick-api' // 综合服务
 
 const API = {
   // 公共服务
@@ -10,6 +10,8 @@ const API = {
   'api.city': `${basePrefix}/common/city`, // 获取市区
   'api.industry': `${basePrefix}/common/industry`, // 获取行业类型
   'api.cardbin': `${basePrefix}/common/cardbin`, // 获取卡bin
+  'api.paychannel': `${basePrefix}/common/paychannel`, // 获取通道信息
+  'api.banklist': `${basePrefix}/common/banklist`, // 获取系统支持的银行卡信息
 
 	// 综合服务
   'api.getopenid': `${basePrefix}/user/getopenid`, // 获取商户信息
@@ -20,6 +22,7 @@ const API = {
   'api.realname': `${basePrefix}/user/realname`, // 实名认证
   'api.setpaypwd': `${basePrefix}/user/setpaypwd`, // 设置支付密码
   'api.addcreditcard': `${basePrefix}/user/addcreditcard`, // 添加信用卡
+  'api.creditlist': `${basePrefix}/user/creditlist`, // 获取信用卡列表
 
   // 商户服务
   'api.querymerchant': `${basePrefix}/merchant/querymerchant`, // 获取商户信息

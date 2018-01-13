@@ -1,19 +1,21 @@
 import Vue from 'vue'   //引入vue
 import VueRouter from 'vue-router'   //引入vue-router
 
+import PublicRouter from '~routes/public/router'
 import HomeRouter from '~routes/home/router'
 import PayRouter from '~routes/pay/router'
 import BillRouter from '~routes/bill/router'
 import BankRouter from '~routes/bank/router'
-import PublicRouter from '~routes/public/router'
+import MyRouter from '~routes/my/router'
 import SettingsRouter from '~routes/settings/router'
 
 const routes = [
+  ...PublicRouter,
   ...HomeRouter,
   ...PayRouter,
   ...BillRouter,
   ...BankRouter,
-  ...PublicRouter,
+  ...MyRouter,
   ...SettingsRouter
 ]
 

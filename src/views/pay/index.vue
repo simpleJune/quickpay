@@ -1,12 +1,15 @@
 <template>
   <div class="page-pay">
-    <h4>武汉市司门口中商平价超市第五店</h4>
+    <h4>{{mchtInfo.merchantName}}</h4>
     <div class="page-row">
       <div id="J_keyboard-payAmt" class="page-row__input">
         <span class="txt">
           <em>消费金额(&yen;)</em>
         </span>
         <span :class="['number', keyboardOptions.show? 'twinkle':'']">{{keyboardOptions.value}}</span>
+      </div>
+      <div class="page-row">
+        <p class="tips">单笔最高2万，当天最高5万</p>
       </div>
     </div>
 
@@ -52,10 +55,6 @@ export default {
   data () {
     return {
       loading: false,
-      // 发送数据
-      postData: {
-        payAmt: "", //待还款金额
-      },
       // 当前页选项
       pageOptions: {
         status: false, //按钮loading
@@ -70,28 +69,9 @@ export default {
   },
   computed: {
     ...mapState({
-        mchtInfo: state => state.global.mchtInfo
-    }),
-    isLoading: {
-      get() {
-        return this.loading
-      },
-      set(newVal) {
-        this.loading = newVal
-      }
-    },
-    isActive() {
-      return (
-        // notNull(this.postData) &&
-        !this.isLoading &&
-        !this.warn_payAmt
-      )
-    }
+        mchtInfo: state => state.home.mchtInfo
+    })
   },
-  watch: {
-    
-  },
-  
   methods: {
     ...mapActions([
       'getDeposit',
@@ -104,11 +84,12 @@ export default {
     onKeyDel(val) {
       this.keyboardOptions.value = this.keyboardOptions.value.replace(new RegExp(".$", "g"), "")
     },
-    onKeySubmit(val) {
-      console.log("onKeySubmit", val)
-    },
     onKeyDisplay(val, key) {
       this.keyboardOptions.show = val
+    },
+    onKeySubmit(val) {
+      console.log("onKeySubmit", val)
+      this.$router.push({name:"payChannel", params:{tradeAmount:val}})
     },
     doNext(evt) {
       if(/loading/ig.test(evt.target.className)) return
@@ -120,9 +101,6 @@ export default {
         this.pageOptions.status = false
       })
     }
-  },
-  created() {
-    
   },
   mounted() {
     setTimeout(() => {
@@ -140,6 +118,9 @@ export default {
     line-height: 1.4em;
     text-align: center;
     padding: 0.8em;
+  }
+  p.tips {
+    margin-top: 25/@unit;
   }
 }
 

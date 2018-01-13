@@ -1,62 +1,6 @@
 <template>
   <div class="page-home">
-    <ul class="home-quick">
-      <li class="money">
-        <router-link to="/pay">
-          <img src="~assets/less/icon/money.png">
-        </router-link>
-        <p>收款</p>
-      </li>
-      <li class="pay">
-        <router-link to="">
-          <img src="~assets/less/icon/pay.png">
-        </router-link>
-        <p>还款</p>
-      </li>
-    </ul>
-
-    <!--九宫格-->
-    <grid class="home-grids" :rows="2" :cols="3">
-      <grid-item link="/my/account">
-        <img slot="icon" src="~assets/less/icon/wodezhanghu.png">
-        <span slot="label">我的账户</span>
-      </grid-item>
-      <grid-item link="/my/profit">
-        <img slot="icon" src="~assets/less/icon/wodefenrun.png">
-        <span slot="label">我的分润</span>
-      </grid-item>
-      <grid-item link="/bank">
-        <img slot="icon" src="~assets/less/icon/zhangdanchaxun.png">
-        <span slot="label">账单查询</span>
-      </grid-item>
-      <grid-item link="/bank">
-        <img slot="icon" src="~assets/less/icon/wodeshanghu.png">
-        <span slot="label">我的商户</span>
-      </grid-item>
-      <grid-item link="/bank">
-        <img slot="icon" src="~assets/less/icon/wodefeilv.png">
-        <span slot="label">我的费率</span>
-      </grid-item>
-      <grid-item link="/bank">
-        <img slot="icon" src="~assets/less/icon/xinyongkabanli.png">
-        <span slot="label">信用卡办理</span>
-      </grid-item>
-    </grid>
-
-    <!--广告-->
-    <div class="home-ads">
-      <swiper class="home-ads__container"
-        :height="ads_height"
-        v-if="ads_list.length > 0"
-      >
-        <swiper-item class="home-ads__item"
-          v-for="(adItem, adIdx) in ads_list"
-          :key="adIdx"
-        >
-          <img :src="adItem.imgUrl">
-        </swiper-item>
-      </swiper>
-    </div>
+    fddfdf
   </div>
 </template>
 
@@ -96,6 +40,11 @@ export default {
     this.headerParams.accessToken &&
     this.headerParams.merchantNo &&
     this.$store.dispatch("getMchtInfo")
+  },
+  methods: {
+    ...mapActions([
+      ''
+    ])
   }
 }
 </script>

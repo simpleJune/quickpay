@@ -55,7 +55,7 @@ export default {
       })
     },
     initWX() {
-      let code = "weixin-code-hefeng-test-0000"
+      let code = ""
       if(!(code = this.$iBox.helper.getURLParam("code"))) {
         let url = window.location.href
         window.location.href = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${this.appId}&redirect_uri=${encodeURIComponent(url)}&response_type=code&scope=snsapi_base#wechat_redirect`

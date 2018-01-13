@@ -10,10 +10,13 @@
 
 import Vue from 'vue'
 import Vuex from 'vuex'
+
 import global from '~store/Global'
 import home from '~store/home'
+import pay from '~store/pay'
 import bill from '~store/bill'
 import bank from '~store/bank'
+import my from '~store/my'
 import settings from '~store/settings'
 
 Vue.use(Vuex)
@@ -22,8 +25,10 @@ export const store = new Vuex.Store({
   modules: {
     global,
     home,
+    pay,
     bill,
     bank,
+    my,
     settings
   }
 })

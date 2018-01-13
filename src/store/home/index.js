@@ -41,6 +41,7 @@ const actions = {
   getOpenId ({ commit }, params = {}) {
     return handleRequest('api.getopenid')(params, {isLoading:true})
     .then((res={}) => {
+      // let res = {"code":"0","data":{"accessToken":"3bb92a55-1e6b-4693-ac86-05012aa4e244","loginMobile":"13662691961","merchantNo":"515187431872398848","merchantStatus":2},"msg":"成功","serverTime":1515820387165}
       let data = res.data
       commit('HOME_MUTATION_OPENID', data.openId) //||"o5hnM0prrEDkfW5p4WtrlN9Eg7bU"
       commit('GLOBAL_MUTATION_MCHTNO', data.merchantNo)
@@ -52,7 +53,7 @@ const actions = {
 
   // 获取商户信息
   getMchtInfo ({ commit }, params = {}) {
-    return handleRequest('api.querymerchant')(params, {isTip:false})
+    return handleRequest('api.querymerchant')(params, {isTip:true})
     .then((res={}) => {
       let data = res.data
       commit('HOME_MUTATION_MCHTINFO', data)

@@ -1,8 +1,8 @@
 <template>
-	<div class="page-settings">
+	<div class="page-bank__add">
     <!--持卡人信息-->
     <group>
-      <cell title="持卡人" :value="postData.username"></cell>
+      <cell title="持卡人" :value="mchtInfo.realName"></cell>
       <x-input title="卡号" v-model="postData.creditAccountNo" @on-blur="onFocusoutCardNo" placeholder="信用卡卡号"></x-input>
       <cell title="银行" :value="postData.bankName"></cell>
     </group>
@@ -31,7 +31,7 @@ import { mapState, mapActions } from 'vuex'
 import VCode from '~components/VCode.vue'
 
 export default {
-  name: 'page-settings',
+  name: 'page-bank__add',
   components: {
     Group,
     Cell,
@@ -61,11 +61,6 @@ export default {
         mchtInfo: state => state.home.mchtInfo
     })
   },
-  created () {
-    setTimeout(() => {
-      this.postData.username = this.mchtInfo.realName
-    }, 800)
-  },
   methods: {
     ...mapActions([
       'sendSmsCode',
@@ -93,9 +88,10 @@ export default {
       })
     },
     onClickSubmit () {
+      this.postData.username = this.mchtInfo.realName
       this.addcreditcard(this.postData)
       .then(res => {
-        console.log("addcreditcard ok")
+        this.$router ? this.$router.back() : window.history.back()
       })
     }
   }
@@ -105,7 +101,7 @@ export default {
 <style lang="less">
 @import "~assets/less/views/public";
 
-.page-settings {
+.page-bank__add {
   .weui-cell__ft {
     color: @font-color-black;
     font-size: @font-size-14;

@@ -45,7 +45,7 @@ const mutations = {
 }
 
 const actions = {
-  // 根据token获取信用卡列表
+  // 发送手机验证码
   sendSmsCode ({ commit }, params = {}) {
     return handleRequest('api.mobile')(params)
     .then(res => {
@@ -85,13 +85,11 @@ const actions = {
     })
   },
 
-
-  // 根据token获取信用卡列表
-  getCreditCardList ({ commit }, params = {}) {
-    return handleRequest('baseUrl.getCreditCardList')(params)
-    .then(res => {
-      commit('GLOBAL_MUTATION_GET_CREDITLIST', res)
-      return res
+  // 获取信用卡列表
+  getBankList ({ commit }, params = {}) {
+    return handleRequest('api.banklist')(params)
+    .then((res={}) => {
+      return res.data
     })
   },
 

@@ -7,6 +7,23 @@
   // margin-top: 20/@unit;
   background-color: @bgColor-white;
 }
+
+.page-preview {
+  height: 160/@unit;
+  line-height: 26/@unit;
+  text-align: center;
+  .iBox-fn__linear();
+  * {
+    color: @font-color-white !important;
+  }
+  &.txt {
+    >h1 {
+      padding-top: 54/@unit;
+    }
+    >p {}
+  }
+}
+
 .page-row {
   font-size: @font-size-14;
   margin: auto 16/@unit;
@@ -47,6 +64,7 @@
     }
   }
 }
+
 .page-row__info {
   font-size: @font-size-14;
   margin: 8/@unit 16/@unit 0;
@@ -56,39 +74,4 @@
 }
 .page-row__btn {
   margin: 44/@unit 16/@unit 0;
-}
-
-.page-preview {
-  padding-right: 16/@unit;
-  background-color: #FFF;
-  .amount-title {
-    padding: 20/@unit 0;
-    text-align: center;
-    .amount-text {
-      font-size: @font-size-16;
-      color: @font-color-black;
-    }
-    .amount-money {
-      color: @font-color-yellow;
-      font-size: 26/@unit;
-    }
-  }
-  .amount-list {
-    font-size: @font-size-13;
-    background-color: #FFF;
-    padding: 10/@unit 0;
-    >p {
-      line-height: 30/@unit;
-      >span {
-        &:first-child {
-          float: left;
-          color: @font-color-gray ;
-        }
-        &:last-child {
-          float: right;
-        }
-      }
-      .iBox-fn__clearfix()
-    }
-  }
 }

@@ -4,7 +4,7 @@
   		<div class="page-bank__row" v-for="(cardItem, cardIdx) in card_list" :key="cardIdx">
   			<bankcard
           :options="cardItem"
-          @click="onClickCardItem(cardItem)"
+          @on-click-item="onClickCardItem"
         ></bankcard>
   		</div>
     </div>

@@ -24,6 +24,8 @@ const API = {
   'api.addcreditcard': `${basePrefix}/user/addcreditcard`, // 添加信用卡
   'api.creditlist': `${basePrefix}/user/creditlist`, // 获取信用卡列表
 
+  'api.topay': `${basePrefix}/payment/topay`, // 发起快捷支付
+
   // 商户服务
   'api.querymerchant': `${basePrefix}/merchant/querymerchant`, // 获取商户信息
 

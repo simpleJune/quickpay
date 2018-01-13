@@ -1,20 +1,23 @@
 <template>
   <div class="page-pay__confirm">
     <div class="page-preview txt">
-      <h1>&yen; {{tradeAmount}}</h1>
-      <p>{{merchantName}}</p>
+      <h1>&yen; {{fields.tradeAmount}}</h1>
+      <p>{{mchtInfo.merchantName}}</p>
     </div>
 
     <group>
-      <x-input type="text" title="姓名" v-model="postData.username" placeholder="您的姓名"></x-input>
-      <x-input type="text" title="身份证号码" v-model="postData.idcard" placeholder="您本人身份证号码"></x-input>
+      <cell is-link title="支付方式" 
+        :value="bank_name_full" 
+        @click.native="onSelectBank"
+      >
+        <!-- <span class="vux-loading"></span> -->
+      </cell>
+      <x-input type="number" title="安全码" v-model="postData.safetyCode" placeholder="信用卡背面3位数字"></x-input>
+      <x-input type="number" title="有效期" v-model="postData.validity" placeholder="示例：09/15 输入0915"></x-input>
     </group>
 
     <group>
-      <cell is-link title="支付密码" :value="postData.industryName" @click.native="onClickSelectMcc"></cell>
-      <x-input type="number" title="结算卡号" v-model="postData.settleAccountNo" @focusout.native="onFocusoutCardNo" placeholder="您本人结算银行卡号"></x-input>
-      <x-input type="tel" title="手机号" v-model="postData.settleMobile" placeholder="结算银行预留手机号"></x-input>
-      
+      <x-input type="number" title="支付密码" v-model="postData.payPwd" placeholder="请输入6位数字支付密码"></x-input>
     </group>
 
     <div class="page-row__btn">
@@ -26,21 +29,45 @@
       >确认支付</x-button>
     </div>
 
-    <!--选择MCC-->
+    <!--选择银行卡下拉框-->
     <slidebox v-model="slideboxOptions.show"
       :options="slideboxOptions"
     >
-      好地方
+      <div class="weui-cells weui-cells_radio">
+        <div class="slidebox-bankcard__bd">
+          <!--有效银行卡-->
+          <bankcard-item
+            v-for="(cardItem, cardIdx) in card_list_valid"
+            :key="cardIdx"
+            :options="cardItem"
+            @on-click-item="onClickCardItem"
+          ></bankcard-item>
+          <!--绑卡-->
+          <cell is-link
+            title="添加信用卡" 
+            link="/bank/add"
+          ></cell>
+          <!--无效银行卡-->
+          <bankcard-item class="invalid"
+            v-for="(cardItem, cardIdx) in card_list_invalid"
+            :key="cardIdx"
+            :options="cardItem"
+          ></bankcard-item>
+        </div>
+      </div>
     </slidebox>
   </div>
 </template>
 <script>
-import { Group, Cell, Radio , XInput, XButton, XTextarea, XAddress, Value2nameFilter as value2name } from 'vux'
+import Vue from 'vue'
 import { mapState, mapActions } from 'vuex'
+import { Group, Cell, Radio , XInput, XButton, XTextarea, XAddress, Value2nameFilter as value2name } from 'vux'
+import Keyboard from '~components/Keyboard'
 import Slidebox from '~components/Slidebox'
+import BankcardItem from '~components/BankcardItem'
 
-// 缓存已经加载过的市区数据
-const CACHE_ADDR = []
+// 元 => 分
+const Yfen = Vue.iBox.helper.Yfen
 
 export default {
   name: 'page-profile',
@@ -50,51 +77,60 @@ export default {
     Radio,
     XInput,
     XButton,
-    XTextarea,
-    XAddress,
-    Slidebox
+    Slidebox,
+    BankcardItem
   },
   data () {
     return {
+      creditList: [],
       postData: {
-        username: '',
-        idcard: '',
-        provinceName: '',
-        cityName: '',
-        address: '',
-        settleAccountNo: '',
-        settleMobile: '',
-        settleBankCode: '',
-        settleBankName: '',
-        cardName: '',
-        industryType: '',
-        industryName: '请选择行业'
+        channelCode: '',
+        channelName: '',
+        tradeAmount: '',
+        bindId: '',
+        safetyCode: '',
+        validity: '',
+        payPwd: '',
+        remark: ''
       },
       pageOptions: {
-        mcc: {
-          value: "",
-          data: []
-        },
+        cardItem: {},
         isActive: true,
         isLoading: false
       },
+      // 选择银行卡
       slideboxOptions: {
         show: false, // 是否显示下拉框
-        title: "请选择行业",
+        title: "选择支付方式",
       }
     }
   },
   computed: {
     ...mapState({
-      // mchtInfo: state => state.global.mchtInfo,
+      fields: state => state.pay.fields,
+      mchtInfo: state => state.home.mchtInfo,
     }),
-    
+    bank_name_full () {
+      let cardItem = this.pageOptions.cardItem
+      let bankName = `${cardItem.creditBankName||""} (${cardItem.creditAccountNo||""})`
+      return cardItem.creditBankName? bankName : ''
+    },
+    card_list_valid () {
+      return this.creditList.filter((cardItem) => {
+        return cardItem.grayFlag == "0"
+      })
+    },
+    card_list_invalid () {
+      return this.creditList.filter((cardItem) => {
+        return cardItem.grayFlag == "1"
+      })
+    }
   },
   created () {
-    let { tradeAmount, merchantName } = this.$route.params
     let { channelCode } = this.$route.query
-    this.tradeAmount = tradeAmount
-    this.merchantName = merchantName
+    let { channelName } = this.$route.params
+    this.postData.channelCode = channelCode
+    this.postData.channelName = channelName
     this.getCreditlist({
       channelNo: channelCode
     })
@@ -102,66 +138,53 @@ export default {
       let creditList = this.creditList = res.creditList || []
       if(creditList.length == 0) {
         this.$router.push({name:"bankAdd"})
+      } else {
+        this.pageOptions.cardItem = creditList[0]
       }
     })
   },
   watch: {
     "pageOptions.cardItem": function(newVal, oldVal) {
-      
+      let cardItem = newVal
+      this.postData.bindId = cardItem.bindId
     }
   },
   methods: {
     // actions的方法
     ...mapActions([
         'getCreditlist',
+        'quickpay',
     ]),
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    getName (value) {
-      return value2name(value, this.pageOptions.addr.data)
-    },
-    onAddrHide () {
-      let addrVal = this.pageOptions.addr.value
-      let addrArr = this.getName(addrVal).split(" ")
-      this.postData.provinceName = addrArr[0]
-      this.postData.cityName = addrArr[1]
-    },
-    onAddrChange (params) {
-      this.pageOptions.addr._value = params
-    },
-    onClickSelectMcc () {
+    onSelectBank() {
       this.slideboxOptions.show = true
     },
-    onChangeMcc (value, label) {
-      this.slideboxOptions.show = false
-      this.postData.industryType = value;
-      this.postData.industryName = label;
+    onInputPwd () {
+      console.log("onInputPwd")
     },
-    onFocusoutCardNo () {
-      this.getCardbin({
-        bankCardNo: this.postData.settleAccountNo
-      }).then(res => {
-        this.postData.cardName = res.cardName
-        this.postData.settleBankName = res.bankName
-        this.postData.settleBankCode = res.bankCode
-      })
+    onClickCardItem(item) {
+      this.slideboxOptions.show = false
+      this.pageOptions.cardItem = item
     },
     onClickSubmit () {
-      this.realname(this.postData)
+      let validityFormatter = function(val) {
+        return (val+"").replace(/^(\d{2})(\d{2})$/, "$2$1")
+      }
+      this.quickpay({
+        ...this.postData,
+        tradeAmount: Yfen(this.fields.tradeAmount),
+        validity: validityFormatter(this.postData.validity)
+      })
       .then(res => {
-        this.$router ? this.$router.back() : window.history.back()
+        // 交易状态
+        // 1-交易失败 2-交易成功 3-交易处理中
+        let status = res.tradeStatus
+        if(status == 1) {
+          //
+        } else if(status == 2) {
+          //
+        } else if(status == 3) {
+          //
+        } else {}
       })
     }
   }

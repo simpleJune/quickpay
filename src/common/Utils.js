@@ -287,7 +287,7 @@ const helper = {
    */
   Yfen(num) {
     var numStr = Number(num).toFixed(2) + "";
-    return parseInt(numStr.replace(/^(\d+)\.?(\d)?(\d)?$/g, "$1$2$3")) + "";
+    return parseInt(numStr.replace(/^(\d+)\.?(\d)?(\d)?$/g, "$1$2$3"));
   },
   
 	/**

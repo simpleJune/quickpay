@@ -1,13 +1,17 @@
 import handleRequest from '~common/API'
 
 const state = {
-  cardItem: {}
+  fields: {}
 }
 
 const mutations = {
-  PAY_MUTATION_CARD (state, payload) {
-    state.cardItem = payload
-  }
+  PAY_MUTATION_FIELD (state, obj = {}) {
+    for(let k in obj) {
+      if(obj.hasOwnProperty(k)) {
+        state.fields[k] = obj[k]
+      }
+    }
+  },
 }
 
 const actions = {
@@ -26,7 +30,14 @@ const actions = {
       return res.data
     })
   },
-
+  
+  // 获取通道列表
+  quickpay ({ commit }, params = {}) {
+    return handleRequest('api.topay')(params, {isLoading:true})
+    .then((res={}) => {
+      return res.data
+    })
+  },
 }
 
 export default {

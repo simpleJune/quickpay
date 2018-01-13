@@ -1,6 +1,6 @@
 <template>
-	<div class="iBox-bankcard" @click="$emit('click')">
-		<div class="iBox-bankcard__lt">
+	<div class="comp-bankcard" @click="$emit('on-click-item', options)">
+		<div class="comp-bankcard__lt">
 			<p class="card-name">{{options.creditBankName}} <em class="card-suffix">({{options.creditAccountNo}})</em></p>
 		</div>
 		<i class="card-icon-sm"><img :src="card_icon_sm" alt="icon"></i>
@@ -28,7 +28,7 @@ export default {
 @import "~assets/less/base/common";
 
 // bankCard
-.iBox-bankcard {
+.comp-bankcard {
   width: 100%;
   height: 80/@unit;
   position: relative;
@@ -58,7 +58,7 @@ export default {
   }
 }
 
-.iBox-bankcard__lt {
+.comp-bankcard__lt {
   padding-top: 25/@unit;
   padding-left: 80/@unit;
   >p {

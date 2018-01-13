@@ -1,7 +1,7 @@
 <template>
   <div class="page-pay__channel">
     <div class="page-preview txt">
-      <h1>&yen; {{tradeAmount}}</h1>
+      <h1>&yen; {{fields.tradeAmount}}</h1>
       <p>交易金额</p>
     </div>
 
@@ -22,9 +22,6 @@ import { Group, Cell, Divider } from 'vux'
 import { mapState, mapActions } from 'vuex'
 import ChannelItem from '~components/ChannelItem'
 
-// 元 => 分
-const Yfen = Vue.iBox.helper.Yfen
-
 export default {
   name: "page-pay-channel",
   components: {
@@ -35,13 +32,13 @@ export default {
   },
   data () {
     return {
-      tradeAmount: "",
       channelList: []
     }
   },
   computed: {
     ...mapState({
-        mchtInfo: state => state.home.mchtInfo,
+      fields: state => state.pay.fields,
+      mchtInfo: state => state.home.mchtInfo,
     }),
   },
   
@@ -51,18 +48,15 @@ export default {
     ]),
     onClickItem (item) {
       let params = {
-        tradeAmount: this.tradeAmount,
-        merchantName: this.mchtInfo.merchantName
+        channelName: item.channelName,
       }
       let query = {
         channelCode: item.channelCode
       }
-      this.$router.push({name:"payConfirm", params:params, query:query})
+      this.$router.push({name:"payConfirm", query:query, params:params})
     }
   },
   created() {
-    let { tradeAmount } = this.$route.params
-    this.tradeAmount = tradeAmount
     this.getPaychannel()
     .then((res={}) => {
       this.channelList = res.channelList || []

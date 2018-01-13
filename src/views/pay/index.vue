@@ -9,7 +9,10 @@
         <span :class="['number', keyboardOptions.show? 'twinkle':'']">{{keyboardOptions.value}}</span>
       </div>
       <div class="page-row">
-        <p class="tips">单笔最高2万，当天最高5万</p>
+        <ul class="list">
+          <li :class="{red:pageOptions.tips1}">1. 最低输入金额{{pageOptions.min}}元</li>
+          <li :class="{red:pageOptions.tips2}">2. 单笔最高{{pageOptions.max|moneyFormatter}}，当天最高{{pageOptions.total|moneyFormatter}}</li>
+        </ul>
       </div>
     </div>
 
@@ -44,9 +47,6 @@ const notNull = function(obj) {
   return flag
 }
 
-// 元 => 分
-const Yfen = Vue.iBox.helper.Yfen
-
 export default {
   components: {
     XButton,
@@ -57,7 +57,12 @@ export default {
       loading: false,
       // 当前页选项
       pageOptions: {
-        status: false, //按钮loading
+        min: 100, // 最小输入金额
+        max: 20000, // 最大输入金额
+        total: 50000, // 当日总交易额
+        status: false, 
+        tips1: false, // 提示1
+        tips2: false, // 提示2
       },
       keyboardOptions: {
         show: false,
@@ -72,12 +77,22 @@ export default {
         mchtInfo: state => state.home.mchtInfo
     })
   },
+  watch: {
+    "keyboardOptions.value": function(newVal, oldVal) {
+      this.pageOptions.tips1 = false
+      this.pageOptions.tips2 = false
+      if(parseInt(newVal) > 20000) {
+        this.pageOptions.tips2 = true
+      }
+    }
+  },
+  filters: {
+		moneyFormatter (val) {
+			let amt = parseInt(val)
+			return amt>=10000? (amt/10000 + "万"): (amt + "")
+		}
+	},
   methods: {
-    ...mapActions([
-      'getDeposit',
-      'getpayBasicsInfo',
-      'getRepaymentpay'
-    ]),
     onKeyInput(val) {
       this.keyboardOptions.value += val
     },
@@ -88,18 +103,18 @@ export default {
       this.keyboardOptions.show = val
     },
     onKeySubmit(val) {
-      console.log("onKeySubmit", val)
-      this.$router.push({name:"payChannel", params:{tradeAmount:val}})
-    },
-    doNext(evt) {
-      if(/loading/ig.test(evt.target.className)) return
-      this.pageOptions.status = true
-      this.getRepaymentpay(this.postData)
-      .then(res => {
-        this.$router.push({name:"payAddStep2"})
-      }).catch(err => {
-        this.pageOptions.status = false
-      })
+      parseInt(val||"0") < 100 && (this.pageOptions.tips1 = true)
+      if(
+        this.pageOptions.tips1 === true ||
+        this.pageOptions.tips2 === true
+      ) {
+        return;
+      }
+      let params = {
+        tradeAmount: val
+      }
+      this.$store.commit("PAY_MUTATION_FIELD", params)
+      this.$router.push({name:"payChannel"})
     }
   },
   mounted() {
@@ -114,13 +129,19 @@ export default {
 @import '~assets/less/views/public';
 
 .page-pay {
+  margin-top: 15/@unit;
   >h4 {
     line-height: 1.4em;
     text-align: center;
     padding: 0.8em;
   }
-  p.tips {
-    margin-top: 25/@unit;
+  ul.list {
+    margin-top: 10/@unit;
+    margin-left: -10/@unit;
+    font-size: 1.2*@font-size-10;
+    >li.red {
+      color: @font-color-red;
+    }
   }
 }
 

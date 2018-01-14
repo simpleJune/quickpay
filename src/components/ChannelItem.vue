@@ -27,23 +27,11 @@ export default {
 		Group,
 		CellBox 
 	},
-	data () {
-		return {
-			tips: "交易时间为学校"
-		}
-	},
 	props: {
 		options: {
 			type: Object,
-			default: {
-				minTradeMoney: 10000
-			},
+			default: {},
 			required: true
-		},
-		computed: {
-
-		},
-		methods: {
 		}
 	},
 	filters: {
@@ -51,8 +39,8 @@ export default {
 			return val? val.replace(/^(\d{2})(\d{2})(\d{2})$/, "$1:$2:$3"):""
 		},
 		moneyFormatter (val) {
-			let amt = parseInt(val)
-			return amt>=10000? (amt/10000 + "万"): (amt + "")
+			let amt = parseInt(val||"0")
+			return amt>=10000? (amt/10000 + "万"): (amt + "元")
 		}
 	}
 }

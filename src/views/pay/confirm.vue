@@ -112,7 +112,7 @@ export default {
     }),
     bank_name_full () {
       let cardItem = this.pageOptions.cardItem
-      let bankName = `${cardItem.creditBankName||""} (${cardItem.creditAccountNo||""})`
+      let bankName = `${cardItem.creditBankName||""}(${cardItem.creditAccountNo||""})`
       return cardItem.creditBankName? bankName : ''
     },
     card_list_valid () {
@@ -178,13 +178,11 @@ export default {
         // 交易状态
         // 1-交易失败 2-交易成功 3-交易处理中
         let status = res.tradeStatus
-        if(status == 1) {
-          //
-        } else if(status == 2) {
-          //
-        } else if(status == 3) {
-          //
-        } else {}
+        status !== undefined && 
+        this.$router.push({
+          name:"publicResult", 
+          query:{platformTradeNo:res.platformTradeNo}
+        })
       })
     }
   }

@@ -1,12 +1,12 @@
 <template>
-  <div class="iBox-slideBox" v-if="show">
+  <div class="comp-slidebox" v-if="show">
     <div :class="['weui-mask', show? 'weui-animate-fade-in':'weui-animate-fade-out']" @click="onClickClose"></div>
-    <div :class="['iBox-slideBox_container', show? 'weui-animate-slide-up':'weui-animate-slide-down']">
-      <div class="iBox-slideBox__hd vux-1px-b">
+    <div :class="['comp-slidebox_container', show? 'weui-animate-slide-up':'weui-animate-slide-down']">
+      <div class="comp-slidebox__hd vux-1px-b">
         <span class="close" @click="onClickClose">关闭</span>
         <span class="title"><em class="caption">{{options.title}}</em></span>
       </div>
-      <div class="iBox-slideBox__bd">
+      <div class="comp-slidebox__bd">
         <slot></slot>
       </div>
     </div>
@@ -15,7 +15,7 @@
 
 <script>
 export default {
-  name: 'slidebox',
+  name: 'comp-slidebox',
   props: {
     value: Boolean,
     options: {
@@ -52,14 +52,14 @@ export default {
 @import "~assets/less/base/common";
 
 // slideBox
-.iBox-slideBox,
-.iBox-slideBox__hd,
-.iBox-slideBox__bd {
+.comp-slidebox,
+.comp-slidebox__hd,
+.comp-slidebox__bd {
   width: 100%;
   height: auto;
   overflow: hidden;
 }
-.iBox-slideBox_container {
+.comp-slidebox_container {
   width: 100%;
   position: fixed;
   left: 0;
@@ -70,7 +70,7 @@ export default {
     font-style: normal;
   }
 }
-.iBox-slideBox__hd {
+.comp-slidebox__hd {
   line-height: 45/@unit;
   position: relative;
   >span {
@@ -87,9 +87,14 @@ export default {
       background-size: 30% auto;
     }
   }
+  &.vux-1px-b {
+    &:after {
+      border-color: @border-color-gray;
+    }
+  }
 }
-.iBox-slideBox__bd {
-  max-height: 430/@unit;
+.comp-slidebox__bd {
+  max-height: 420/@unit;
   overflow: scroll;
   .weui-cells {
     margin-top: 0;

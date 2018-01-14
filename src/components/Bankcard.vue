@@ -9,7 +9,7 @@
 
 <script>
 export default {
-	name: "bankcard",
+	name: "comp-bankcard",
 	props: {
 		options: {
 			type: Object,

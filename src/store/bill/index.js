@@ -4,7 +4,7 @@
 import  handleRequest  from '~common/API.js'
 
 const state = {
-  recordList: [] // 账本记录
+  
 }
 
 const mutations = {
@@ -14,24 +14,21 @@ const mutations = {
 }
 
 const actions = {
-  getBillTradeRecords({ commit, state }, payload = {}) {
-    return handleRequest('billUrl.queryTradeRecords')(payload)
-      .then(res => {
-        /*if (!reload) {
-          let { resultList } = res
-          if(resultList.length) {
-            resultList = resultList.concat(state.recordList)
-            commit('GET_BILL_TRADE_RECORDS', { resultList })
-          }
-        }else {
-          commit('GET_BILL_TRADE_RECORDS', res)
-        }*/
-        return res
-      })
-      .catch(err => {
-        return Promise.reject(err)
-      })
-  }
+  // 查询交易订单信息
+  getOrderlist({ commit }, params) {
+    return handleRequest('api.orderlist')(params, {isLoading:true})
+    .then((res={}) => {
+      return res.data
+    })
+  },
+
+  // 查询订单详情
+  getOrderdetail({ commit }, params) {
+    return handleRequest('api.orderdetail')(params, {isLoading:true})
+    .then((res={}) => {
+      return res.data
+    })
+  },
 }
 
 export default {

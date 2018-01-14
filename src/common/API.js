@@ -2,7 +2,7 @@ import request from '~common/Ajax'
 import Vue from 'vue'
 
 // API
-const basePrefix = '/credit-quick-api' // 综合服务
+const basePrefix = '/mock-credit-quick-api' // 综合服务
 
 const API = {
   // 公共服务
@@ -25,6 +25,8 @@ const API = {
   'api.creditlist': `${basePrefix}/user/creditlist`, // 获取信用卡列表
 
   'api.topay': `${basePrefix}/payment/topay`, // 发起快捷支付
+  'api.orderlist': `${basePrefix}/payment/orderlist`, // 查询交易订单信息
+  'api.orderdetail': `${basePrefix}/payment/orderdetail`, // 查询订单详情
 
   // 商户服务
   'api.querymerchant': `${basePrefix}/merchant/querymerchant`, // 获取商户信息

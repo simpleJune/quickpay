@@ -31,7 +31,7 @@ const actions = {
     })
   },
   
-  // 获取通道列表
+  // 发起快捷支付
   quickpay ({ commit }, params = {}) {
     return handleRequest('api.topay')(params, {isLoading:true})
     .then((res={}) => {

@@ -16,7 +16,7 @@ const mutations = {
 const actions = {
   // 查询交易订单信息
   getOrderlist({ commit }, params) {
-    return handleRequest('api.orderlist')(params, {isLoading:true})
+    return handleRequest('api.orderlist')(params)
     .then((res={}) => {
       return res.data
     })

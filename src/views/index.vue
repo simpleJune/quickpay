@@ -25,7 +25,7 @@
         <img slot="icon" src="~assets/less/icon/wodefenrun.png">
         <span slot="label">我的分润</span>
       </grid-item>
-      <grid-item link="/bank">
+      <grid-item link="/bill">
         <img slot="icon" src="~assets/less/icon/zhangdanchaxun.png">
         <span slot="label">账单查询</span>
       </grid-item>

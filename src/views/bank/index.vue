@@ -8,7 +8,7 @@
         ></bankcard>
   		</div>
     </div>
-		<div class="page-bank__add">
+		<div class="page-bank__link">
       <div class="add-btn right-triangle">
         <router-link to="/bank/add">添加信用卡</router-link>
       </div>
@@ -17,7 +17,7 @@
       v-model="showAction"
       :menus = "menus"
       :show-cancel="true"
-      @on-click-menu="onClickMenu"
+      @on-click-menu="onClickMenuItem"
     ></actionsheet>
 	</div>
 </template>
@@ -37,10 +37,6 @@ export default {
       showAction: false,
       menus: [
         {
-          label: '修改银行卡信息',
-          value: 'edit'
-        },
-        {
           label: '解除绑定',
           value: 'unbind'
         }
@@ -56,11 +52,13 @@ export default {
     }
   },
   methods: {
-    onClickMenu(menuKey) {
-
+    onClickMenuItem(menuItem) {
+      this.showAction = false
+      console.log("onClickMenuItem", menuItem)
     },
     onClickCardItem(cardItem) {
-
+      this.showAction = true
+      console.log("onClickCardItem", cardItem)
     },
     ...mapActions(['getCreditCardList'])
   }
@@ -80,7 +78,7 @@ export default {
     .page-bank__group {
       padding-bottom: 54/@unit;
     }
-    .page-bank__add {
+    .page-bank__link {
       position: fixed;
       left: 0;
       bottom: 0;
@@ -98,7 +96,7 @@ export default {
 	margin: 10/@unit 16/@unit;
 }
 
-.page-bank__add {
+.page-bank__link {
   background: @bgColor-white;
   width: 100%;
   .add-btn {

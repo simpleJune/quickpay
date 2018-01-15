@@ -39,3 +39,22 @@
 .clearfix {
   .iBox-fn__clearfix()
 }
+
+/*右三角型*/
+.right-triangle {
+  position: relative;
+  &:after {
+    content: " ";
+    display: inline-block;
+    height: 10/@unit;
+    width: 10/@unit;
+    border-width: 2px 2px 0 0;
+    border-color: #C8C8CD;
+    border-style: solid;
+    transform: matrix(0.71, 0.71, -0.71, 0.71, 0, 0) scale(0.7);
+    position: absolute;
+    top: 50%;
+    margin-top: -5/@unit;
+    right: 16/@unit;
+  }
+}

@@ -1,17 +1,26 @@
 <template>
   <result 
     :icon="result_icon" 
-    :title="result_title" 
-    :desc="result.tradeStatusMsg" 
+    :title="result.tradeStatusMsg" 
+    :desc="result_desc" 
   >
     <!--结果展示详情-->
     <section class="comp-result__list" slot="result" v-if="result.tradeStatus==2">
-      <p><span>付款方式</span><span>{{result.creditBankName+"("+result.creditAccountNo+")"}}</span></p>
+      <p><span>{{result.merchantName}}</span><span>&yen; {{result.tradeAmount|formatMoney}}</span></p>
+      <p><span>付款方式</span><span>{{result.creditBankName}}({{result.creditAccountNo}})</span></p>
       <p><span>交易流水</span><span>{{result.platformTradeNo}}</span></p>
       <p><span>交易时间</span><span>{{result.paymentDate}}</span></p>
+      <br>
+      <p><span>到帐状态</span><span>{{result.pushFailDetail}}</span></p>
+      <p><span>到帐时间</span><span>{{result.pushDate}}</span></p>
+      <p><span>服务费</span><span>&yen; {{result.merchantFee|formatMoney}}</span></p>
+      <p><span>到帐金额</span><span>&yen; {{result.settleAmount|formatMoney}}</span></p>
     </section>
     <section class="comp-result__list" slot="result" v-if="result.tradeStatus==3">
-      <p>处理中...</p>
+      <p><span>{{result.merchantName}}</span><span>&yen; {{result.tradeAmount|formatMoney}}</span></p>
+      <p><span>付款方式</span><span>{{result.creditBankName}}({{result.creditAccountNo}})</span></p>
+      <p><span>交易流水</span><span>{{result.platformTradeNo}}</span></p>
+      <p><span>交易时间</span><span>{{result.paymentDate}}</span></p>
     </section>
   </result>
 </template>
@@ -28,13 +37,6 @@ const ICON_MAP = {
   "3": "waiting"
 };
 
-// 状态标题
-const title_MAP = {
-  "1": "交易失败",
-  "2": "支付成功",
-  "3": "正在处理，请稍后..."
-};
-
 export default {
   name: 'public-result',
   components: {
@@ -47,11 +49,11 @@ export default {
     }
   },
   computed: {
-    result_icon() {
+    result_icon () {
       return ICON_MAP[this.result.tradeStatus + ""] 
     },
-    result_title() {
-      return title_MAP[this.result.tradeStatus + ""] 
+    result_desc () {
+      return this.result.tradeStatus == 2 ? "" : this.result.payFailDetail
     }
   },
   created () {

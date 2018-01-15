@@ -4,7 +4,7 @@
       <cell title="商户名称" :value="mchtInfo.merchantName"></cell>
       <cell title="姓名" :value="mchtInfo.realName"></cell>
       <cell title="身份证号码" :value="mchtInfo.idcardNo"></cell>
-      <cell title="手机号" :value="mchtInfo.settleMobile" is-link link="/settings/mobile"></cell>
+      <cell title="手机号" :value="mchtInfo.settleMobile"></cell>
     </group>
     <group title="银行卡">
       <cell title="结算卡号" :value="mchtInfo.settleAccountNo" is-link link="/settings/card"></cell>
@@ -29,16 +29,16 @@ export default {
   },
   data() {
     return {
-      pageOptions: {
-        isActive: false,
-        isLoading: false
-      },
+      
     }
   },
   computed: {
     ...mapState({
         mchtInfo: state => state.home.mchtInfo
     })
+  },
+  created () {
+    this.$store.dispatch("getMchtInfo")
   }
 }
 </script>

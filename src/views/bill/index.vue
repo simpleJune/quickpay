@@ -1,8 +1,5 @@
-<!--
-  Created by ZhouShengGuo on 2017-11-28 09:57:31
--->
 <template>
-  <div class="repayment-history-index">
+  <div class="page-bill">
     <scroller
       :on-refresh="refresh"
       :on-infinite="infinite"
@@ -10,16 +7,16 @@
       class="scroller"
     >
       <div class="history-list">
-        <section class="history-item" v-for="(item, index) in recordList" :key="item.id" @click="onClickItem(item)">
-          <section class="history-item-wrapper" :class="{'vux-1px-b': index !== (recordList.length - 1)}">
+        <section class="history-item" v-for="(item, index) in orderList" :key="item.id" @click="onClickItem(item)">
+          <section class="history-item-wrapper" :class="{'vux-1px-b': index !== (orderList.length - 1)}">
             <section class="left">
-              <p class="title">{{ item.bankName }}(尾号{{ item.cardNo }})</p>
-              <p class="desc">{{ item.tradeTime }} {{ item.tradeType === '1' ? '还款' : '消费'}}</p>
+              <p class="title">{{ item.creditBankName }}({{ item.creditAccountNo }})</p>
+              <p class="desc">{{ item.paymentDate }}</p>
             </section>
             <section class="right">
               <a class="state">
-                <b>&yen; {{ item.txAmt | formatMoney }}</b>
-                <span class="state" :class="getStateClass(item.status)">{{ item.status | formatStatusText }}</span>
+                <b>&yen; {{ item.tradeAmount | formatMoney }}</b>
+                <span class="state" :class="getStateClass(item.tradeStatus)">{{ item.tradeStatus | formatStatusText }}</span>
               </a>
             </section>
           </section>
@@ -32,77 +29,63 @@
 <script>
 import { mapActions } from 'vuex'
 
+import Vue from 'vue'
+import VueScroller from 'vue-scroller' // 无限加载
+
+Vue.use(VueScroller)
+
 export default {
-  name: 'repayment-history-index',
+  name: 'page-bill',
   data() {
     return {
-     /* recordList: Array.from(new Array(10)).map((el, index)=> {
-        let item =  {
-          id: '1',
-          tradeNo: '',
-          tradeType: '1', //交易类型 1: 还款 2: 消费
-          status: 0 , // 交易状态 0: 成功 1:未知 2: 失败
-          tradeErrCode: '',
-          tradeErrDesc: '',
-          txAmt: '10000', // 交易金额（分）
-          expectFeeAmt: '', // 预计手续费(分)
-          feeAmt: '', //  手续费(分)
-          bankName: '中国工商银行',
-          cardNo: '4321', // 卡号（后四位）
-          tradeTime: '2017-10-21 12:22' // 交易时间
-        }
-        index%2 === 0 && (item.status = 1 )
-        index%3 === 0 && (item.status = 2 ) && (item.tradeType = 2)
-        return item
-      })*/
-      recordList: []
+      pageSize: 10,
+      pageIndex: 1,
+      orderList: []
     }
   },
   computed: {
     noDataText() {
-      return this.recordList.length>0 ? "没有啦~":"暂无任何交易记录"
+      return this.orderList.length>0 ? "没有啦~":"暂无任何交易记录"
     }
   },
   filters: {
-    formatStatusText(status = 0) {
+    formatStatusText(status) {
       switch (status) {
-        case 0 :
-          return '已成功'
         case 1 :
-          return '处理中'
+          return '失败'
         case 2 :
-          return '已关闭'
-        default :
+          return '成功'
+        case 3 :
           return '处理中'
+        default :
+          return ''
       }
     }
   },
   methods: {
     getStateClass(status) {
       switch (status) {
-        case 0 :
-          return 'success'
         case 1 :
-          return 'loading'
-        case 2 :
           return 'fail'
-        default :
+        case 2 :
+          return 'success'
+        case 3 :
           return 'loading'
+        default :
+          return ''
       }
     },
     refresh(done) {
+      this.pageIndex = 1
       let params = {
-        pageSize: 10
+        pageSize: this.pageSize,
+        pageIndex: this.pageIndex
       }
-      this.getBillTradeRecords(params)
+      this.getOrderlist(params)
       .then(res => {
-        let { resultList } = res
-        // if(!resultList.length) {
-        //   done(true)
-        // }else {
-          this.recordList = resultList
-          done()
-        // }
+        let { orderList } = res
+        this.orderList = orderList
+        done()
       })
       .catch(err => {
         done(true)
@@ -110,55 +93,59 @@ export default {
     },
     infinite(done) {
       let params = {
-        pageSize: 10
+        pageSize: this.pageSize,
+        pageIndex: this.pageIndex++
       }
-      let r = this.recordList
-      let lastId = 0 in r ? r[r.length - 1].id : ''
-      lastId && (params.lastId = lastId)
-      this.getBillTradeRecords(params)
+      // let r = this.orderList
+      // let pageIndex = 0 in r ? r[r.length - 1].id : ''
+      // pageIndex && (params.pageIndex = pageIndex)
+      this.getOrderlist(params)
       .then(res => {
-        let { resultList } = res
-        if(!resultList.length) {
+        let { orderList, pageIndex } = res
+        if(!orderList.length) {
           done(true)
-        }else {
-          this.recordList = this.recordList.concat(resultList)
+        } else {
+          this.orderList = this.orderList.concat(orderList)
           done()
         }
       })
       .catch(err => {
         done(true)
       })
-      console.log("infinite", this.resultList)
+      // console.log("infinite", this.orderList)
     },
     onClickItem(item) {
-      this.$router.push({name: 'billDetail', params: { record: item }})
+      // 交易状态
+      // 1-交易失败 2-交易成功 3-交易处理中
+      let status = item.tradeStatus
+      status !== undefined && 
+      status != 1 && 
+      this.$router.push({
+        name:"publicResult", 
+        query:{platformTradeNo:item.platformTradeNo}
+      })
     },
-    ...mapActions(['getBillTradeRecords'])
+    ...mapActions([
+      'getOrderlist'
+    ])
   },
   destroyed() {
-    this.recordList = []
+    this.pageSize = 10
+    this.pageIndex = 1
+    this.orderList = []
   }
 }
 
 </script>
 
-<style lang="less" scoped>
-@import '~assets/less/base/function';
+<style lang="less">
+@import '~assets/less/base/common';
 
-.repayment-history-index {
-  .scroller {
-    // padding-top: 44/@unit;
-  }
-
-  .history-list {
-    margin: 20/@unit 0;
-  }
-
+.page-bill {
   .history-item {
     padding-left: 16/@unit;
     background-color: #FFF;
   }
-
   .history-item-wrapper  {
     font-size: 15/@unit;
     display: flex;
